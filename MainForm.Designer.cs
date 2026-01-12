@@ -15,7 +15,6 @@ namespace icsEditor
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.eventGroupBox = new System.Windows.Forms.GroupBox();
             this.eventPanel = new MetroFramework.Controls.MetroPanel();
             this.lblLibelle = new MetroFramework.Controls.MetroLabel();
@@ -422,7 +421,6 @@ namespace icsEditor
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.eventsListBox);
             this.Controls.Add(this.eventGroupBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1040, 520);
             this.MinimumSize = new System.Drawing.Size(1040, 520);

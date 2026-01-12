@@ -15,6 +15,21 @@ namespace icsEditor
         public MainForm()
         {
             InitializeComponent();
+
+            // Charger l'icône depuis les ressources embarquées
+            try
+            {
+                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                using (var stream = assembly.GetManifestResourceStream("icsEditor.icsEditor.ico"))
+                {
+                    if (stream != null)
+                    {
+                        this.Icon = new System.Drawing.Icon(stream);
+                    }
+                }
+            }
+            catch { }
+
             events = new List<CalendarEvent>();
             UpdateEventsList();
 
