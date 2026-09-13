@@ -9,6 +9,13 @@ namespace icsEditor
     public partial class MainForm : MetroForm
     {
         private List<CalendarEvent> events;
+
+        /// <summary>
+        /// Événements supprimés qui avaient déjà été publiés : ils restent dans le
+        /// fichier exporté avec STATUS:CANCELLED pour que le calendrier destinataire
+        /// les retire au lieu de conserver une copie orpheline.
+        /// </summary>
+        private List<CalendarEvent> cancelledEvents = new List<CalendarEvent>();
         private int editingIndex = -1;
         private bool hasUnsavedChanges = false;
 
@@ -80,7 +87,15 @@ namespace icsEditor
         {
             if (editingIndex >= 0 && editingIndex < events.Count && ValidateInputs())
             {
-                events[editingIndex] = CreateEventFromInputs();
+                CalendarEvent updatedEvent = CreateEventFromInputs();
+
+                // Conserver l'identité de l'événement et incrémenter SEQUENCE :
+                // le client calendrier met alors à jour l'événement existant
+                // au lieu d'en créer un nouveau à côté.
+                updatedEvent.Uid = events[editingIndex].Uid;
+                updatedEvent.Sequence = events[editingIndex].Sequence + 1;
+
+                events[editingIndex] = updatedEvent;
                 UpdateEventsList();
 
                 // Maintenir la sélection pour continuer l'édition
@@ -112,7 +127,19 @@ namespace icsEditor
                 if (result == DialogResult.Yes)
                 {
                     int deletedIndex = eventsListBox.SelectedIndex;
+                    CalendarEvent deletedEvent = events[deletedIndex];
                     events.RemoveAt(deletedIndex);
+
+                    // Un événement jamais publié disparaît sans laisser de trace.
+                    // Les autres sont conservés annulés : le prochain export dira au
+                    // calendrier destinataire de les retirer.
+                    if (deletedEvent.DejaPublie)
+                    {
+                        deletedEvent.EstAnnule = true;
+                        deletedEvent.Sequence++;
+                        cancelledEvents.Add(deletedEvent);
+                    }
+
                     ClearInputs();
                     editingIndex = -1;
                     hasUnsavedChanges = false;
@@ -153,6 +180,18 @@ namespace icsEditor
 
             if (result == DialogResult.Yes)
             {
+                // Même règle que la suppression unitaire : ce qui a déjà été publié
+                // part en annulation, le reste disparaît sans trace.
+                foreach (CalendarEvent supprime in events)
+                {
+                    if (supprime.DejaPublie)
+                    {
+                        supprime.EstAnnule = true;
+                        supprime.Sequence++;
+                        cancelledEvents.Add(supprime);
+                    }
+                }
+
                 events.Clear();
                 ClearInputs();
                 UpdateEventsList();
@@ -218,6 +257,70 @@ namespace icsEditor
             }
         }
 
+        /// <summary>
+        /// Ancienneté au-delà de laquelle une annulation peut être oubliée sans risque :
+        /// tous les destinataires ont eu le temps de la lire.
+        /// </summary>
+        private const int MoisAvantPurgeAnnulation = 6;
+
+        private void btnPurgeAnnulations_Click(object sender, EventArgs e)
+        {
+            if (cancelledEvents.Count == 0)
+            {
+                MessageBox.Show(
+                    "Aucune annulation en attente, rien à purger." + Environment.NewLine + Environment.NewLine
+                        + "Une annulation apparaît quand vous supprimez un événement issu d'un fichier ICS, ou déjà exporté au moins une fois.",
+                    "Purge",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            DateTime limite = DateTime.Today.AddMonths(-MoisAvantPurgeAnnulation);
+            List<CalendarEvent> anciennes = cancelledEvents.FindAll(annule => annule.DateFin.Date < limite);
+
+            PurgeDialog purgeDialog = new PurgeDialog(cancelledEvents.Count, anciennes.Count, MoisAvantPurgeAnnulation);
+            DialogResult choix = purgeDialog.ShowDialog(this);
+
+            if (choix == DialogResult.Cancel)
+                return;
+
+            bool purgeTotale = choix == DialogResult.Yes;
+            int aPurger = purgeTotale ? cancelledEvents.Count : anciennes.Count;
+
+            if (aPurger == 0)
+                return;
+
+            string confirmation = purgeTotale
+                ? $"Supprimer définitivement les {aPurger} annulation(s), y compris les plus récentes ?"
+                    + Environment.NewLine + Environment.NewLine
+                    + "Si ce fichier a déjà été diffusé, les événements supprimés resteront dans les calendriers qui n'ont pas encore lu l'annulation."
+                : $"Supprimer définitivement {aPurger} annulation(s) de plus de {MoisAvantPurgeAnnulation} mois ?";
+
+            DialogResult result = MessageBox.Show(
+                confirmation,
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                purgeTotale ? MessageBoxIcon.Warning : MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            if (purgeTotale)
+                cancelledEvents.Clear();
+            else
+                cancelledEvents.RemoveAll(annule => annule.DateFin.Date < limite);
+
+            UpdateButtonStates();
+
+            MessageBox.Show(
+                $"{aPurger} annulation(s) purgée(s). {cancelledEvents.Count} restante(s).",
+                "Purge terminée",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
         private void btnExportICS_Click(object sender, EventArgs e)
         {
             saveFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics";
@@ -228,9 +331,20 @@ namespace icsEditor
             {
                 try
                 {
-                    string icsContent = ICSManager.GenerateICS(events);
+                    // Les annulations accompagnent les événements actifs dans le même
+                    // fichier : c'est ce qui permet au calendrier destinataire de
+                    // supprimer ce qui a été supprimé ici.
+                    List<CalendarEvent> aExporter = new List<CalendarEvent>(events);
+                    aExporter.AddRange(cancelledEvents);
+
+                    string icsContent = ICSManager.GenerateICS(aExporter);
                     File.WriteAllText(saveFileDialog.FileName, icsContent);
-                    MessageBox.Show("Fichier ICS généré avec succès.", "Export terminé", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    string messageExport = $"{events.Count} événement(s) exporté(s).";
+                    if (cancelledEvents.Count > 0)
+                        messageExport += Environment.NewLine + $"{cancelledEvents.Count} annulation(s) publiée(s).";
+
+                    MessageBox.Show(messageExport, "Export terminé", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -249,9 +363,26 @@ namespace icsEditor
                 try
                 {
                     string icsContent = File.ReadAllText(openFileDialog.FileName);
-                    List<CalendarEvent> importedEvents = ICSManager.ParseICS(icsContent);
+                    List<CalendarEvent> parsedEvents = ICSManager.ParseICS(icsContent);
 
-                    if (importedEvents.Count > 0)
+                    // Les événements annulés du fichier ne sont pas affichés : ce sont
+                    // des traces de suppression, qu'on se contente de reconduire à
+                    // l'export pour ne pas les ressusciter chez le destinataire.
+                    List<CalendarEvent> importedEvents = new List<CalendarEvent>();
+                    List<CalendarEvent> importedCancelled = new List<CalendarEvent>();
+
+                    foreach (CalendarEvent parsed in parsedEvents)
+                    {
+                        if (parsed.EstAnnule)
+                            importedCancelled.Add(parsed);
+                        else
+                            importedEvents.Add(parsed);
+                    }
+
+
+                    // Un fichier ne contenant que des annulations reste exploitable :
+                    // il faut pouvoir reconduire ces annulations.
+                    if (importedEvents.Count > 0 || importedCancelled.Count > 0)
                     {
                         DialogResult result = DialogResult.Yes;
 
@@ -266,6 +397,7 @@ namespace icsEditor
                         {
                             // Remplacer (ou importer si la liste était vide)
                             events = importedEvents;
+                            cancelledEvents = importedCancelled;
                             UpdateEventsList();
                             ClearInputs();
                             editingIndex = -1;
@@ -281,8 +413,30 @@ namespace icsEditor
                         }
                         else if (result == DialogResult.No)
                         {
-                            // Ajouter
-                            events.AddRange(importedEvents);
+                            // Ajouter, en écartant les événements déjà présents
+                            // (même UID, ou à défaut même libellé et mêmes dates)
+                            List<CalendarEvent> nouveaux = new List<CalendarEvent>();
+                            int doublons = 0;
+
+                            foreach (CalendarEvent importe in importedEvents)
+                            {
+                                bool dejaPresent = events.Exists(existant => existant.IsSameEventAs(importe))
+                                    || nouveaux.Exists(ajoute => ajoute.IsSameEventAs(importe));
+
+                                if (dejaPresent)
+                                    doublons++;
+                                else
+                                    nouveaux.Add(importe);
+                            }
+
+                            events.AddRange(nouveaux);
+
+                            foreach (CalendarEvent annule in importedCancelled)
+                            {
+                                if (!cancelledEvents.Exists(existant => existant.IsSameEventAs(annule)))
+                                    cancelledEvents.Add(annule);
+                            }
+
                             UpdateEventsList();
                             ClearInputs();
                             editingIndex = -1;
@@ -294,7 +448,11 @@ namespace icsEditor
                                 eventsListBox.SelectedIndex = 0;
                             }
 
-                            MessageBox.Show("Événements ajoutés avec succès.", "Import terminé", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            string messageAjout = $"{nouveaux.Count} événement(s) ajouté(s).";
+                            if (doublons > 0)
+                                messageAjout += Environment.NewLine + $"{doublons} doublon(s) ignoré(s).";
+
+                            MessageBox.Show(messageAjout, "Import terminé", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     else
@@ -376,7 +534,20 @@ namespace icsEditor
 
             btnDeleteAll.Enabled = events.Count > 0;
             btnDelete.Enabled = selectedIndex >= 0;
-            btnExportICS.Enabled = events.Count > 0;
+            // Un export reste utile quand il ne reste que des annulations à publier.
+            btnExportICS.Enabled = events.Count > 0 || cancelledEvents.Count > 0;
+
+            // Les annulations n'apparaissent pas dans la liste : le compteur du bouton
+            // et son infobulle sont les seuls endroits où l'utilisateur les voit.
+            // Le bouton reste actif même sans annulation : un contrôle désactivé
+            // n'affiche pas d'infobulle sous WinForms, et resterait donc muet sur
+            // la raison de son état. Le clic répond à sa place.
+            btnPurgeAnnulations.Text = cancelledEvents.Count > 0
+                ? $"Purger annulations ({cancelledEvents.Count})"
+                : "Purger annulations";
+            toolTipPurge.SetToolTip(btnPurgeAnnulations, cancelledEvents.Count > 0
+                ? $"{cancelledEvents.Count} suppression(s) publiée(s) avec le prochain export, pour que le calendrier destinataire retire ces événements."
+                : "Aucune annulation en attente : rien à purger. Supprimez un événement issu d'un fichier ICS pour en produire une.");
             btnAdd.Enabled = editingIndex < 0;
             btnUpdate.Enabled = editingIndex >= 0 && hasUnsavedChanges;
 

@@ -21,9 +21,16 @@ namespace icsEditor
 
             foreach (var evt in events)
             {
+                // Conserver l'UID d'origine : un client calendrier identifie un événement
+                // par son UID. En régénérer un à chaque export créerait des doublons
+                // au lieu de mettre à jour l'événement existant.
+                if (string.IsNullOrWhiteSpace(evt.Uid))
+                    evt.Uid = Guid.NewGuid().ToString();
+
                 var calendarEvent = new ICalEvent
                 {
-                    Uid = Guid.NewGuid().ToString(),
+                    Uid = evt.Uid,
+                    Sequence = evt.Sequence,
                     DtStamp = new CalDateTime(DateTime.UtcNow),
                     Summary = evt.Libelle
                 };
@@ -62,6 +69,11 @@ namespace icsEditor
                     calendarEvent.End = new CalDateTime(DateTime.SpecifyKind(endDateTime, DateTimeKind.Unspecified), "Europe/Paris");
                 }
 
+                // Un événement supprimé est publié annulé plutôt que retiré du fichier :
+                // sans cela, le client calendrier garde l'ancien événement indéfiniment.
+                if (evt.EstAnnule)
+                    calendarEvent.Status = EventStatus.Cancelled;
+
                 // Propriétés optionnelles
                 if (!string.IsNullOrWhiteSpace(evt.Lieu))
                     calendarEvent.Location = evt.Lieu;
@@ -70,6 +82,10 @@ namespace icsEditor
                     calendarEvent.Description = evt.Description;
 
                 calendar.Events.Add(calendarEvent);
+
+                // L'événement existe désormais dans un fichier : son annulation
+                // éventuelle devra être publiée.
+                evt.DejaPublie = true;
             }
 
             var serializer = new CalendarSerializer();
@@ -88,6 +104,12 @@ namespace icsEditor
                 {
                     var evt = new CalendarEvent
                     {
+                        // Ical.Net fabrique un UID quand le fichier n'en fournit pas :
+                        // la détection de doublon ne peut donc pas s'y fier seule.
+                        Uid = calEvent.Uid ?? string.Empty,
+                        Sequence = calEvent.Sequence,
+                        EstAnnule = string.Equals(calEvent.Status, EventStatus.Cancelled, StringComparison.OrdinalIgnoreCase),
+                        DejaPublie = true,
                         Libelle = calEvent.Summary ?? string.Empty,
                         Lieu = calEvent.Location ?? string.Empty,
                         Description = calEvent.Description ?? string.Empty

@@ -15,6 +15,7 @@ namespace icsEditor
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.eventGroupBox = new System.Windows.Forms.GroupBox();
             this.eventPanel = new MetroFramework.Controls.MetroPanel();
             this.lblLibelle = new MetroFramework.Controls.MetroLabel();
@@ -41,6 +42,8 @@ namespace icsEditor
             this.btnMoveDown = new MetroFramework.Controls.MetroButton();
             this.btnExportICS = new MetroFramework.Controls.MetroButton();
             this.btnImportICS = new MetroFramework.Controls.MetroButton();
+            this.btnPurgeAnnulations = new MetroFramework.Controls.MetroButton();
+            this.toolTipPurge = new System.Windows.Forms.ToolTip(this.components);
             this.lblVersion = new MetroFramework.Controls.MetroLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -389,6 +392,17 @@ namespace icsEditor
             this.btnImportICS.UseSelectable = true;
             this.btnImportICS.Click += new System.EventHandler(this.btnImportICS_Click);
             // 
+            // btnPurgeAnnulations
+            // 
+            this.btnPurgeAnnulations.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnPurgeAnnulations.Location = new System.Drawing.Point(524, 462);
+            this.btnPurgeAnnulations.Name = "btnPurgeAnnulations";
+            this.btnPurgeAnnulations.Size = new System.Drawing.Size(200, 35);
+            this.btnPurgeAnnulations.TabIndex = 18;
+            this.btnPurgeAnnulations.Text = "Purger annulations";
+            this.btnPurgeAnnulations.UseSelectable = true;
+            this.btnPurgeAnnulations.Click += new System.EventHandler(this.btnPurgeAnnulations_Click);
+            // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
@@ -414,6 +428,7 @@ namespace icsEditor
             this.ClientSize = new System.Drawing.Size(1040, 520);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.btnImportICS);
+            this.Controls.Add(this.btnPurgeAnnulations);
             this.Controls.Add(this.btnExportICS);
             this.Controls.Add(this.btnMoveDown);
             this.Controls.Add(this.btnMoveUp);
@@ -443,6 +458,8 @@ namespace icsEditor
         private MetroFramework.Controls.MetroButton btnMoveDown;
         private MetroFramework.Controls.MetroButton btnExportICS;
         private MetroFramework.Controls.MetroButton btnImportICS;
+        private MetroFramework.Controls.MetroButton btnPurgeAnnulations;
+        private System.Windows.Forms.ToolTip toolTipPurge;
         private MetroFramework.Controls.MetroLabel lblVersion;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
