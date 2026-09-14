@@ -41,12 +41,17 @@ namespace icsEditor
             UpdateEventsList();
 
             // Initialiser les heures à 00:00
-            dtpHeureDebut.ShowCheckBox = true;
-            dtpHeureDebut.Checked = false;
+            // Une case unique pilote les deux heures. Les cases intégrées aux
+            // DateTimePicker disaient la même chose, mais personne ne connaît cette
+            // convention Windows — et leur état initial ne tenait pas au démarrage.
             dtpHeureDebut.Value = DateTime.Today; // 00:00
-            dtpHeureFin.ShowCheckBox = true;
-            dtpHeureFin.Checked = false;
-            dtpHeureFin.Value = DateTime.Today; // 00:00
+            dtpHeureFin.Value = DateTime.Today;   // 00:00
+            chkJourneeEntiere.Checked = true;
+            AppliquerJourneeEntiere();
+
+            toolTipAide.SetToolTip(chkJourneeEntiere,
+                "Coché, l'événement occupe la journée entière et ne porte aucune heure."
+                + Environment.NewLine + "Décochez pour saisir une heure de début et de fin.");
 
             // Ajouter des gestionnaires d'événements pour détecter les modifications
             txtLibelle.TextChanged += (s, e) => MarkAsChanged();
@@ -54,11 +59,27 @@ namespace icsEditor
             dtpDateFin.ValueChanged += (s, e) => MarkAsChanged();
             dtpHeureDebut.ValueChanged += (s, e) => MarkAsChanged();
             dtpHeureFin.ValueChanged += (s, e) => MarkAsChanged();
+            chkJourneeEntiere.CheckedChanged += (s, e) => { AppliquerJourneeEntiere(); MarkAsChanged(); };
             txtLieu.TextChanged += (s, e) => MarkAsChanged();
             txtDescription.TextChanged += (s, e) => MarkAsChanged();
 
             // Mettre à jour l'état des boutons
             UpdateButtonStates();
+        }
+
+        /// <summary>
+        /// Les champs heure n'ont de sens que pour un événement qui n'occupe pas
+        /// la journée entière : on les grise plutôt que de laisser saisir une valeur
+        /// qui serait ignorée à l'export.
+        /// </summary>
+        private void AppliquerJourneeEntiere()
+        {
+            bool avecHeures = !chkJourneeEntiere.Checked;
+
+            lblHeureDebut.Enabled = avecHeures;
+            dtpHeureDebut.Enabled = avecHeures;
+            lblHeureFin.Enabled = avecHeures;
+            dtpHeureFin.Enabled = avecHeures;
         }
 
         private void MarkAsChanged()
@@ -481,7 +502,7 @@ namespace icsEditor
                 return false;
             }
 
-            if (dtpHeureDebut.Checked && dtpHeureFin.Checked && dtpDateDebut.Value == dtpDateFin.Value)
+            if (!chkJourneeEntiere.Checked && dtpDateDebut.Value == dtpDateFin.Value)
             {
                 if (dtpHeureFin.Value.TimeOfDay <= dtpHeureDebut.Value.TimeOfDay)
                 {
@@ -500,8 +521,8 @@ namespace icsEditor
                 Libelle = txtLibelle.Text.Trim(),
                 DateDebut = dtpDateDebut.Value.Date,
                 DateFin = dtpDateFin.Value.Date,
-                HeureDebut = dtpHeureDebut.Checked ? (TimeSpan?)dtpHeureDebut.Value.TimeOfDay : null,
-                HeureFin = dtpHeureFin.Checked ? (TimeSpan?)dtpHeureFin.Value.TimeOfDay : null,
+                HeureDebut = chkJourneeEntiere.Checked ? null : (TimeSpan?)dtpHeureDebut.Value.TimeOfDay,
+                HeureFin = chkJourneeEntiere.Checked ? null : (TimeSpan?)dtpHeureFin.Value.TimeOfDay,
                 Lieu = txtLieu.Text.Trim(),
                 Description = txtDescription.Text.Trim()
             };
@@ -514,8 +535,10 @@ namespace icsEditor
             txtDescription.Clear();
             dtpDateDebut.Value = DateTime.Today;
             dtpDateFin.Value = DateTime.Today;
-            dtpHeureDebut.Checked = false;
-            dtpHeureFin.Checked = false;
+            dtpHeureDebut.Value = DateTime.Today;
+            dtpHeureFin.Value = DateTime.Today;
+            chkJourneeEntiere.Checked = true;
+            AppliquerJourneeEntiere();
         }
 
         private void UpdateEventsList()
@@ -545,7 +568,7 @@ namespace icsEditor
             btnPurgeAnnulations.Text = cancelledEvents.Count > 0
                 ? $"Purger annulations ({cancelledEvents.Count})"
                 : "Purger annulations";
-            toolTipPurge.SetToolTip(btnPurgeAnnulations, cancelledEvents.Count > 0
+            toolTipAide.SetToolTip(btnPurgeAnnulations, cancelledEvents.Count > 0
                 ? $"{cancelledEvents.Count} suppression(s) publiée(s) avec le prochain export, pour que le calendrier destinataire retire ces événements."
                 : "Aucune annulation en attente : rien à purger. Supprimez un événement issu d'un fichier ICS pour en produire une.");
             btnAdd.Enabled = editingIndex < 0;
@@ -652,25 +675,16 @@ namespace icsEditor
                 dtpDateDebut.Value = evt.DateDebut;
                 dtpDateFin.Value = evt.DateFin;
 
-                if (evt.HeureDebut.HasValue)
-                {
-                    dtpHeureDebut.Checked = true;
-                    dtpHeureDebut.Value = DateTime.Today.Add(evt.HeureDebut.Value);
-                }
-                else
-                {
-                    dtpHeureDebut.Checked = false;
-                }
+                chkJourneeEntiere.Checked = evt.IsAllDay();
 
-                if (evt.HeureFin.HasValue)
-                {
-                    dtpHeureFin.Checked = true;
-                    dtpHeureFin.Value = DateTime.Today.Add(evt.HeureFin.Value);
-                }
-                else
-                {
-                    dtpHeureFin.Checked = false;
-                }
+                dtpHeureDebut.Value = evt.HeureDebut.HasValue
+                    ? DateTime.Today.Add(evt.HeureDebut.Value)
+                    : DateTime.Today;
+                dtpHeureFin.Value = evt.HeureFin.HasValue
+                    ? DateTime.Today.Add(evt.HeureFin.Value)
+                    : DateTime.Today;
+
+                AppliquerJourneeEntiere();
 
                 txtLieu.Text = evt.Lieu;
                 txtDescription.Text = evt.Description;

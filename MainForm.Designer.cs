@@ -43,7 +43,8 @@ namespace icsEditor
             this.btnExportICS = new MetroFramework.Controls.MetroButton();
             this.btnImportICS = new MetroFramework.Controls.MetroButton();
             this.btnPurgeAnnulations = new MetroFramework.Controls.MetroButton();
-            this.toolTipPurge = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipAide = new System.Windows.Forms.ToolTip(this.components);
+            this.chkJourneeEntiere = new MetroFramework.Controls.MetroCheckBox();
             this.lblVersion = new MetroFramework.Controls.MetroLabel();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -71,6 +72,7 @@ namespace icsEditor
             this.eventPanel.Controls.Add(this.dtpDateFin);
             this.eventPanel.Controls.Add(this.lblHeureDebut);
             this.eventPanel.Controls.Add(this.dtpHeureDebut);
+            this.eventPanel.Controls.Add(this.chkJourneeEntiere);
             this.eventPanel.Controls.Add(this.lblHeureFin);
             this.eventPanel.Controls.Add(this.dtpHeureFin);
             this.eventPanel.Controls.Add(this.lblLieu);
@@ -182,6 +184,16 @@ namespace icsEditor
             this.dtpHeureDebut.ShowUpDown = true;
             this.dtpHeureDebut.Size = new System.Drawing.Size(150, 22);
             this.dtpHeureDebut.TabIndex = 2;
+            // 
+            // chkJourneeEntiere
+            // 
+            this.chkJourneeEntiere.AutoSize = true;
+            this.chkJourneeEntiere.Location = new System.Drawing.Point(310, 80);
+            this.chkJourneeEntiere.Name = "chkJourneeEntiere";
+            this.chkJourneeEntiere.Size = new System.Drawing.Size(130, 15);
+            this.chkJourneeEntiere.TabIndex = 3;
+            this.chkJourneeEntiere.Text = "Journée entière";
+            this.chkJourneeEntiere.UseSelectable = true;
             // 
             // lblHeureFin
             // 
@@ -439,6 +451,12 @@ namespace icsEditor
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1040, 520);
             this.MinimumSize = new System.Drawing.Size(1040, 520);
+            // Le mode par défaut (Flat, comme DropShadow) dessine l'ombre avec une
+            // seconde fenêtre qui devient propriétaire de celle-ci. Windows active
+            // alors une fenêtre incapable de recevoir le focus et les premières
+            // frappes se perdent. AeroShadow laisse Windows dessiner l'ombre et
+            // garde une fenêtre de premier niveau normale.
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Name = "MainForm";
             this.Resizable = false;
             this.Text = "ICS Editor";
@@ -459,7 +477,8 @@ namespace icsEditor
         private MetroFramework.Controls.MetroButton btnExportICS;
         private MetroFramework.Controls.MetroButton btnImportICS;
         private MetroFramework.Controls.MetroButton btnPurgeAnnulations;
-        private System.Windows.Forms.ToolTip toolTipPurge;
+        private System.Windows.Forms.ToolTip toolTipAide;
+        private MetroFramework.Controls.MetroCheckBox chkJourneeEntiere;
         private MetroFramework.Controls.MetroLabel lblVersion;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
