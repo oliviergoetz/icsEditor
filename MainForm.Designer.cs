@@ -36,12 +36,15 @@ namespace icsEditor
             this.btnUpdate = new MetroFramework.Controls.MetroButton();
             this.btnClear = new MetroFramework.Controls.MetroButton();
             this.eventsListBox = new System.Windows.Forms.ListBox();
+            this.btnDupliquer = new MetroFramework.Controls.MetroButton();
+            this.btnClasserParDates = new MetroFramework.Controls.MetroButton();
             this.btnDelete = new MetroFramework.Controls.MetroButton();
             this.btnDeleteAll = new MetroFramework.Controls.MetroButton();
             this.btnMoveUp = new MetroFramework.Controls.MetroButton();
             this.btnMoveDown = new MetroFramework.Controls.MetroButton();
-            this.btnExportICS = new MetroFramework.Controls.MetroButton();
-            this.btnImportICS = new MetroFramework.Controls.MetroButton();
+            this.btnEnregistrer = new MetroFramework.Controls.MetroButton();
+            this.btnNouveau = new MetroFramework.Controls.MetroButton();
+            this.btnOuvrir = new MetroFramework.Controls.MetroButton();
             this.btnPurgeAnnulations = new MetroFramework.Controls.MetroButton();
             this.toolTipAide = new System.Windows.Forms.ToolTip(this.components);
             this.chkJourneeEntiere = new MetroFramework.Controls.MetroCheckBox();
@@ -57,7 +60,7 @@ namespace icsEditor
             this.eventGroupBox.Controls.Add(this.eventPanel);
             this.eventGroupBox.Location = new System.Drawing.Point(23, 80);
             this.eventGroupBox.Name = "eventGroupBox";
-            this.eventGroupBox.Size = new System.Drawing.Size(465, 380);
+            this.eventGroupBox.Size = new System.Drawing.Size(465, 460);
             this.eventGroupBox.TabIndex = 0;
             this.eventGroupBox.TabStop = false;
             this.eventGroupBox.Text = "Événement";
@@ -79,15 +82,12 @@ namespace icsEditor
             this.eventPanel.Controls.Add(this.txtLieu);
             this.eventPanel.Controls.Add(this.lblDescription);
             this.eventPanel.Controls.Add(this.txtDescription);
-            this.eventPanel.Controls.Add(this.btnAdd);
-            this.eventPanel.Controls.Add(this.btnUpdate);
-            this.eventPanel.Controls.Add(this.btnClear);
             this.eventPanel.HorizontalScrollbarBarColor = true;
             this.eventPanel.HorizontalScrollbarHighlightOnWheel = false;
             this.eventPanel.HorizontalScrollbarSize = 10;
             this.eventPanel.Location = new System.Drawing.Point(6, 20);
             this.eventPanel.Name = "eventPanel";
-            this.eventPanel.Size = new System.Drawing.Size(459, 354);
+            this.eventPanel.Size = new System.Drawing.Size(459, 434);
             this.eventPanel.TabIndex = 0;
             this.eventPanel.VerticalScrollbarBarColor = true;
             this.eventPanel.VerticalScrollbarHighlightOnWheel = false;
@@ -296,7 +296,7 @@ namespace icsEditor
             // btnAdd
             // 
             this.btnAdd.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnAdd.Location = new System.Drawing.Point(149, 295);
+            this.btnAdd.Location = new System.Drawing.Point(178, 550);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(99, 30);
             this.btnAdd.TabIndex = 7;
@@ -307,7 +307,7 @@ namespace icsEditor
             // btnUpdate
             // 
             this.btnUpdate.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnUpdate.Location = new System.Drawing.Point(254, 295);
+            this.btnUpdate.Location = new System.Drawing.Point(283, 550);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(98, 30);
             this.btnUpdate.TabIndex = 8;
@@ -318,7 +318,7 @@ namespace icsEditor
             // btnClear
             // 
             this.btnClear.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnClear.Location = new System.Drawing.Point(358, 295);
+            this.btnClear.Location = new System.Drawing.Point(387, 550);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(87, 30);
             this.btnClear.TabIndex = 9;
@@ -334,17 +334,28 @@ namespace icsEditor
             this.eventsListBox.ItemHeight = 16;
             this.eventsListBox.Location = new System.Drawing.Point(506, 88);
             this.eventsListBox.Name = "eventsListBox";
-            this.eventsListBox.Size = new System.Drawing.Size(514, 292);
+            this.eventsListBox.Size = new System.Drawing.Size(714, 452);
             this.eventsListBox.TabIndex = 10;
             this.eventsListBox.SelectedIndexChanged += new System.EventHandler(this.eventsListBox_SelectedIndexChanged);
+            // 
+            // btnDupliquer
+            // 
+            this.btnDupliquer.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnDupliquer.Location = new System.Drawing.Point(506, 550);
+            this.btnDupliquer.Name = "btnDupliquer";
+            this.btnDupliquer.Size = new System.Drawing.Size(100, 30);
+            this.btnDupliquer.TabIndex = 11;
+            this.btnDupliquer.Text = "Dupliquer";
+            this.btnDupliquer.UseSelectable = true;
+            this.btnDupliquer.Click += new System.EventHandler(this.btnDupliquer_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnDelete.Location = new System.Drawing.Point(506, 390);
+            this.btnDelete.Location = new System.Drawing.Point(612, 550);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 30);
-            this.btnDelete.TabIndex = 11;
+            this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Supprimer";
             this.btnDelete.UseSelectable = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -352,21 +363,32 @@ namespace icsEditor
             // btnDeleteAll
             // 
             this.btnDeleteAll.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnDeleteAll.Location = new System.Drawing.Point(616, 390);
+            this.btnDeleteAll.Location = new System.Drawing.Point(718, 550);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(120, 30);
-            this.btnDeleteAll.TabIndex = 12;
+            this.btnDeleteAll.TabIndex = 13;
             this.btnDeleteAll.Text = "Supprimer tout";
             this.btnDeleteAll.UseSelectable = true;
             this.btnDeleteAll.Click += new System.EventHandler(this.btnDeleteAll_Click);
             // 
+            // btnClasserParDates
+            // 
+            this.btnClasserParDates.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnClasserParDates.Location = new System.Drawing.Point(844, 550);
+            this.btnClasserParDates.Name = "btnClasserParDates";
+            this.btnClasserParDates.Size = new System.Drawing.Size(150, 30);
+            this.btnClasserParDates.TabIndex = 14;
+            this.btnClasserParDates.Text = "Classer par dates";
+            this.btnClasserParDates.UseSelectable = true;
+            this.btnClasserParDates.Click += new System.EventHandler(this.btnClasserParDates_Click);
+            // 
             // btnMoveUp
             // 
             this.btnMoveUp.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnMoveUp.Location = new System.Drawing.Point(746, 390);
+            this.btnMoveUp.Location = new System.Drawing.Point(1000, 550);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(60, 30);
-            this.btnMoveUp.TabIndex = 13;
+            this.btnMoveUp.TabIndex = 15;
             this.btnMoveUp.Text = "▲";
             this.btnMoveUp.UseSelectable = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
@@ -374,44 +396,55 @@ namespace icsEditor
             // btnMoveDown
             // 
             this.btnMoveDown.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnMoveDown.Location = new System.Drawing.Point(816, 390);
+            this.btnMoveDown.Location = new System.Drawing.Point(1066, 550);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(60, 30);
-            this.btnMoveDown.TabIndex = 14;
+            this.btnMoveDown.TabIndex = 16;
             this.btnMoveDown.Text = "▼";
             this.btnMoveDown.UseSelectable = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
-            // btnExportICS
+            // btnEnregistrer
             // 
-            this.btnExportICS.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnExportICS.Location = new System.Drawing.Point(880, 462);
-            this.btnExportICS.Name = "btnExportICS";
-            this.btnExportICS.Size = new System.Drawing.Size(140, 35);
-            this.btnExportICS.TabIndex = 17;
-            this.btnExportICS.Text = "Exporter ICS";
-            this.btnExportICS.UseSelectable = true;
-            this.btnExportICS.Click += new System.EventHandler(this.btnExportICS_Click);
+            this.btnEnregistrer.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnEnregistrer.Location = new System.Drawing.Point(874, 630);
+            this.btnEnregistrer.Name = "btnEnregistrer";
+            this.btnEnregistrer.Size = new System.Drawing.Size(140, 35);
+            this.btnEnregistrer.TabIndex = 19;
+            this.btnEnregistrer.Text = "Enregistrer";
+            this.btnEnregistrer.UseSelectable = true;
+            this.btnEnregistrer.Click += new System.EventHandler(this.btnEnregistrer_Click);
             // 
-            // btnImportICS
+            // btnNouveau
             // 
-            this.btnImportICS.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnImportICS.Location = new System.Drawing.Point(734, 462);
-            this.btnImportICS.Name = "btnImportICS";
-            this.btnImportICS.Size = new System.Drawing.Size(140, 35);
-            this.btnImportICS.TabIndex = 16;
-            this.btnImportICS.Text = "Importer ICS";
-            this.btnImportICS.UseSelectable = true;
-            this.btnImportICS.Click += new System.EventHandler(this.btnImportICS_Click);
+            this.btnNouveau.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnNouveau.Location = new System.Drawing.Point(582, 630);
+            this.btnNouveau.Name = "btnNouveau";
+            this.btnNouveau.Size = new System.Drawing.Size(140, 35);
+            this.btnNouveau.TabIndex = 17;
+            this.btnNouveau.Text = "Nouveau";
+            this.btnNouveau.UseSelectable = true;
+            this.btnNouveau.Click += new System.EventHandler(this.btnNouveau_Click);
+            // 
+            // btnOuvrir
+            // 
+            this.btnOuvrir.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnOuvrir.Location = new System.Drawing.Point(728, 630);
+            this.btnOuvrir.Name = "btnOuvrir";
+            this.btnOuvrir.Size = new System.Drawing.Size(140, 35);
+            this.btnOuvrir.TabIndex = 18;
+            this.btnOuvrir.Text = "Ouvrir";
+            this.btnOuvrir.UseSelectable = true;
+            this.btnOuvrir.Click += new System.EventHandler(this.btnOuvrir_Click);
             // 
             // btnPurgeAnnulations
             // 
             this.btnPurgeAnnulations.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnPurgeAnnulations.Location = new System.Drawing.Point(524, 462);
+            this.btnPurgeAnnulations.Location = new System.Drawing.Point(1020, 630);
             this.btnPurgeAnnulations.Name = "btnPurgeAnnulations";
             this.btnPurgeAnnulations.Size = new System.Drawing.Size(200, 35);
-            this.btnPurgeAnnulations.TabIndex = 18;
-            this.btnPurgeAnnulations.Text = "Purger annulations";
+            this.btnPurgeAnnulations.TabIndex = 20;
+            this.btnPurgeAnnulations.Text = "Purger les annulations";
             this.btnPurgeAnnulations.UseSelectable = true;
             this.btnPurgeAnnulations.Click += new System.EventHandler(this.btnPurgeAnnulations_Click);
             // 
@@ -419,38 +452,44 @@ namespace icsEditor
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.lblVersion.Location = new System.Drawing.Point(5, 496);
+            this.lblVersion.Location = new System.Drawing.Point(5, 656);
             this.lblVersion.Name = "lblVersion";
             this.lblVersion.Size = new System.Drawing.Size(89, 17);
-            this.lblVersion.TabIndex = 18;
+            this.lblVersion.TabIndex = 21;
             this.lblVersion.Text = "icsEditor v1.0.0";
             // 
             // saveFileDialog
             // 
-            this.saveFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics|Fichiers JSON (*.json)|*.json";
+            this.saveFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics";
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics|Fichiers JSON (*.json)|*.json";
+            this.openFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1040, 520);
+            this.ClientSize = new System.Drawing.Size(1240, 680);
             this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.btnImportICS);
+            this.Controls.Add(this.btnNouveau);
+            this.Controls.Add(this.btnOuvrir);
             this.Controls.Add(this.btnPurgeAnnulations);
-            this.Controls.Add(this.btnExportICS);
+            this.Controls.Add(this.btnEnregistrer);
             this.Controls.Add(this.btnMoveDown);
             this.Controls.Add(this.btnMoveUp);
+            this.Controls.Add(this.btnClasserParDates);
             this.Controls.Add(this.btnDeleteAll);
+            this.Controls.Add(this.btnDupliquer);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.eventsListBox);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.eventGroupBox);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1040, 520);
-            this.MinimumSize = new System.Drawing.Size(1040, 520);
+            this.MaximumSize = new System.Drawing.Size(1240, 680);
+            this.MinimumSize = new System.Drawing.Size(1240, 680);
             // Le mode par défaut (Flat, comme DropShadow) dessine l'ombre avec une
             // seconde fenêtre qui devient propriétaire de celle-ci. Windows active
             // alors une fenêtre incapable de recevoir le focus et les premières
@@ -470,12 +509,15 @@ namespace icsEditor
 
         private System.Windows.Forms.GroupBox eventGroupBox;
         private System.Windows.Forms.ListBox eventsListBox;
+        private MetroFramework.Controls.MetroButton btnDupliquer;
+        private MetroFramework.Controls.MetroButton btnClasserParDates;
         private MetroFramework.Controls.MetroButton btnDelete;
         private MetroFramework.Controls.MetroButton btnDeleteAll;
         private MetroFramework.Controls.MetroButton btnMoveUp;
         private MetroFramework.Controls.MetroButton btnMoveDown;
-        private MetroFramework.Controls.MetroButton btnExportICS;
-        private MetroFramework.Controls.MetroButton btnImportICS;
+        private MetroFramework.Controls.MetroButton btnEnregistrer;
+        private MetroFramework.Controls.MetroButton btnNouveau;
+        private MetroFramework.Controls.MetroButton btnOuvrir;
         private MetroFramework.Controls.MetroButton btnPurgeAnnulations;
         private System.Windows.Forms.ToolTip toolTipAide;
         private MetroFramework.Controls.MetroCheckBox chkJourneeEntiere;

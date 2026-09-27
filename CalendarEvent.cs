@@ -77,38 +77,28 @@ namespace icsEditor
 
         public override string ToString()
         {
-            // Vérifier si les dates sont différentes
+            // Date en tête : la liste se lit comme un agenda. Le « : » sépare les
+            // dates du libellé sans se confondre avec le « - » d'une plage.
+            string result = $"{DateDebut:dd/MM/yyyy}";
+
+            if (HeureDebut.HasValue)
+                result += $" {HeureDebut.Value:hh\\:mm}";
+
             if (!DateDebut.Date.Equals(DateFin.Date))
             {
-                // Plusieurs jours : format "libelle - DD/MM/YYYY - DD/MM/YYYY"
-                string result = $"{Libelle} - {DateDebut:dd/MM/yyyy}";
-
-                // Ajouter l'heure de début si présente
-                if (HeureDebut.HasValue)
-                    result += $" {HeureDebut.Value:hh\\:mm}";
-
+                // Plusieurs jours : "DD/MM/YYYY [hh:mm] - DD/MM/YYYY [hh:mm]"
                 result += $" - {DateFin:dd/MM/yyyy}";
 
-                // Ajouter l'heure de fin si présente
                 if (HeureFin.HasValue)
                     result += $" {HeureFin.Value:hh\\:mm}";
-
-                return result;
             }
-            else
+            else if (HeureFin.HasValue)
             {
-                // Un seul jour : format "libelle - DD/MM/YYYY"
-                string result = $"{Libelle} - {DateDebut:dd/MM/yyyy}";
-
-                // Ajouter les heures si présentes
-                if (HeureDebut.HasValue)
-                    result += $" {HeureDebut.Value:hh\\:mm}";
-
-                if (HeureFin.HasValue)
-                    result += $" - {HeureFin.Value:hh\\:mm}";
-
-                return result;
+                // Un seul jour : "DD/MM/YYYY hh:mm - hh:mm"
+                result += $" - {HeureFin.Value:hh\\:mm}";
             }
+
+            return $"{result} : {Libelle}";
         }
     }
 }

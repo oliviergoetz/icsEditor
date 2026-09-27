@@ -10,7 +10,7 @@ namespace icsEditor
             InitializeComponent();
 
             lblMessage.Text =
-                $"{total} annulation(s) en attente, dont {anciennes} portant sur des événements terminés depuis plus de {moisAnciennete} mois." +
+                $"{total} {Libelles.Pluriel(total, "annulation")} en attente, dont {anciennes} portant sur des événements terminés depuis plus de {moisAnciennete} mois." +
                 Environment.NewLine + Environment.NewLine +
                 "Purger une annulation encore récente est risqué si le fichier a déjà été diffusé : " +
                 "un destinataire qui n'a pas encore lu l'annulation gardera l'événement supprimé.";
