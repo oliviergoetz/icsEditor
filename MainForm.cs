@@ -707,7 +707,9 @@ namespace icsEditor
 
             if (!chkJourneeEntiere.Checked && dtpDateDebut.Value == dtpDateFin.Value)
             {
-                if (dtpHeureFin.Value.TimeOfDay <= dtpHeureDebut.Value.TimeOfDay)
+                // 00:00 en fin = minuit à la fin du jour (voir CalendarEvent.FinitAMinuit)
+                TimeSpan heureFin = dtpHeureFin.Value.TimeOfDay;
+                if (heureFin != TimeSpan.Zero && heureFin <= dtpHeureDebut.Value.TimeOfDay)
                 {
                     MessageBox.Show("L'heure de fin doit être supérieure à l'heure de début.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;

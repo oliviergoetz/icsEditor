@@ -55,7 +55,13 @@ namespace icsEditor
                         : evt.DateDebut;
 
                     DateTime endDateTime;
-                    if (evt.HeureFin.HasValue)
+                    if (evt.FinitAMinuit())
+                    {
+                        // Fin à 00:00 saisie = minuit à la fin du jour de fin,
+                        // soit 00:00 le lendemain dans le fichier.
+                        endDateTime = evt.DateFin.AddDays(1);
+                    }
+                    else if (evt.HeureFin.HasValue)
                     {
                         endDateTime = evt.DateFin.Add(evt.HeureFin.Value);
                     }
@@ -149,6 +155,11 @@ namespace icsEditor
                                 DateTime endLocal = calEvent.End.AsUtc.ToLocalTime();
                                 evt.DateFin = endLocal.Date;
                                 evt.HeureFin = endLocal.TimeOfDay;
+
+                                // 00:00 le lendemain = minuit à la fin de la veille :
+                                // c'est ainsi qu'on l'a écrit, et qu'on le saisit.
+                                if (endLocal.TimeOfDay == TimeSpan.Zero && endLocal.Date > startLocal.Date)
+                                    evt.DateFin = endLocal.Date.AddDays(-1);
                             }
                             else
                             {

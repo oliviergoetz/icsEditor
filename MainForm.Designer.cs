@@ -296,10 +296,10 @@ namespace icsEditor
             // btnAdd
             // 
             this.btnAdd.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnAdd.Location = new System.Drawing.Point(178, 550);
+            this.btnAdd.Location = new System.Drawing.Point(283, 550);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(99, 30);
-            this.btnAdd.TabIndex = 7;
+            this.btnAdd.TabIndex = 8;
             this.btnAdd.Text = "Ajouter";
             this.btnAdd.UseSelectable = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -307,22 +307,22 @@ namespace icsEditor
             // btnUpdate
             // 
             this.btnUpdate.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnUpdate.Location = new System.Drawing.Point(283, 550);
+            this.btnUpdate.Location = new System.Drawing.Point(388, 550);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(98, 30);
-            this.btnUpdate.TabIndex = 8;
-            this.btnUpdate.Text = "Appliquer";
+            this.btnUpdate.Size = new System.Drawing.Size(99, 30);
+            this.btnUpdate.TabIndex = 9;
+            this.btnUpdate.Text = "Modifier";
             this.btnUpdate.UseSelectable = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnClear
             // 
             this.btnClear.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnClear.Location = new System.Drawing.Point(387, 550);
+            this.btnClear.Location = new System.Drawing.Point(178, 550);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(87, 30);
-            this.btnClear.TabIndex = 9;
-            this.btnClear.Text = "Vider";
+            this.btnClear.Size = new System.Drawing.Size(99, 30);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Nouveau";
             this.btnClear.UseSelectable = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 

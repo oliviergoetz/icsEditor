@@ -68,8 +68,19 @@ namespace icsEditor
             return DateDebut;
         }
 
+        /// <summary>
+        /// Une heure de fin à 00:00 signifie minuit à la fin du jour de fin :
+        /// « 21/03 19:00 → 21/03 00:00 » se termine le 22/03 à 00:00.
+        /// </summary>
+        public bool FinitAMinuit()
+        {
+            return HeureDebut.HasValue && HeureFin == TimeSpan.Zero;
+        }
+
         public DateTime GetEndDateTime()
         {
+            if (FinitAMinuit())
+                return DateFin.AddDays(1);
             if (HeureFin.HasValue)
                 return DateFin.Add(HeureFin.Value);
             return DateFin.AddDays(1); // Pour les événements sur toute la journée
