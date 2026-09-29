@@ -311,7 +311,7 @@ namespace icsEditor
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(99, 30);
             this.btnUpdate.TabIndex = 9;
-            this.btnUpdate.Text = "Modifier";
+            this.btnUpdate.Text = "Appliquer";
             this.btnUpdate.UseSelectable = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
