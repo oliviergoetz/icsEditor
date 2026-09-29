@@ -491,6 +491,35 @@ namespace icsEditor
                 MessageBoxIcon.Information);
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            // Une seconde instance vient de nous passer la main (voir InstanceUnique)
+            if (m.Msg == InstanceUnique.WM_COPYDATA)
+            {
+                var donnees = (InstanceUnique.COPYDATASTRUCT)System.Runtime.InteropServices.Marshal
+                    .PtrToStructure(m.LParam, typeof(InstanceUnique.COPYDATASTRUCT));
+                string chemin = donnees.lpData;
+
+                // Différé : l'autre instance attend le retour de SendMessage et ne
+                // doit pas rester bloquée pendant la question « enregistrer ? ».
+                BeginInvoke((Action)(() => RecevoirDemandeAutreInstance(chemin)));
+                m.Result = (IntPtr)1;
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
+
+        private void RecevoirDemandeAutreInstance(string chemin)
+        {
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            Activate();
+
+            if (!string.IsNullOrEmpty(chemin) && ConfirmDocumentChanges())
+                OpenDocument(chemin);
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // Ctrl+S fonctionne quel que soit le champ qui a le focus, mais suit
@@ -715,13 +744,38 @@ namespace icsEditor
             AppliquerJourneeEntiere();
         }
 
+        /// <summary>
+        /// Met la liste à jour sur place : seules les lignes qui ont changé sont
+        /// réécrites. Vider puis tout remplir faisait clignoter la liste à chaque
+        /// sélection, et la resélection qui suivait la faisait défiler.
+        /// </summary>
         private void UpdateEventsList()
         {
-            eventsListBox.Items.Clear();
-            foreach (CalendarEvent evt in events)
+            int premiereVisible = eventsListBox.TopIndex;
+            eventsListBox.BeginUpdate();
+
+            for (int i = 0; i < events.Count; i++)
             {
-                eventsListBox.Items.Add(evt.ToString());
+                string texte = events[i].ToString();
+                if (i >= eventsListBox.Items.Count)
+                    eventsListBox.Items.Add(texte);
+                else if (!texte.Equals(eventsListBox.Items[i]))
+                    eventsListBox.Items[i] = texte;
             }
+
+            while (eventsListBox.Items.Count > events.Count)
+                eventsListBox.Items.RemoveAt(eventsListBox.Items.Count - 1);
+
+            // Sans événement en cours d'édition, rien ne doit rester sélectionné :
+            // les appelants resélectionnent ensuite, et comptent sur ce changement
+            // de sélection pour recharger le formulaire.
+            if (editingIndex < 0)
+                eventsListBox.SelectedIndex = -1;
+
+            if (eventsListBox.Items.Count > 0)
+                eventsListBox.TopIndex = Math.Min(premiereVisible, eventsListBox.Items.Count - 1);
+
+            eventsListBox.EndUpdate();
             UpdateButtonStates();
         }
 

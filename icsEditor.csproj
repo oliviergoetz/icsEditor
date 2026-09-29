@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="CalendarEvent.cs" />
     <Compile Include="ICSManager.cs" />
+    <Compile Include="InstanceUnique.cs" />
     <Compile Include="Libelles.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
