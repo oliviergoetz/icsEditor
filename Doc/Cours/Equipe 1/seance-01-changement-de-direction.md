@@ -23,7 +23,7 @@ Si un jour vous êtes deux gauchers, mettez-les face à face — entre eux, le c
 
 ## 0–5 · Échauffement dans les carrés
 
-Mini-tennis **dans les carrés de service**, par paires qui se font face de part et d'autre du filet. Chaque paire occupe son propre couloir : les échanges sont simultanés et indépendants, et aucune balle n'en croise une autre.
+Mini-tennis **dans les carrés de service**, par paires qui se font face de part et d'autre du filet.
 
 **Deux par deux** : deux échanges à 4, 🟡 **trois à 6**, en s'étalant sur toute la largeur, couloirs compris — personne n'attend. À 5, deux paires jouent et le cinquième 🟡 **entre à chaque balle** : celui qui manque sort et ramasse.
 
