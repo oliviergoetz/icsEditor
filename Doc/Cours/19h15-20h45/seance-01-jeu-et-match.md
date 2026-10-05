@@ -2,16 +2,7 @@
 
 Jeudi 19h15–20h45, groupe adultes messieurs, 6 inscrits (NC à 30/4), un court. Je suis le prof : je ne joue pas, je peux lancer au panier et rester à l'extérieur de l'exercice.
 
-## Ce que je cherche ce soir
-
-Quatre choses à relever pour chacun, dans la grille en bas de la fiche :
-
-- **Attitude** — respect des règles, écoute et concentration, esprit d'équipe, comportement sur le court et en dehors.
-- **Qualité physique** — engagement, endurance, explosivité et déplacements, gestion de l'effort.
-- **Combativité** — volonté de gagner, prise d'initiative, rebond après les difficultés, attitude dans les points importants.
-- **Service** — **par-dessus l'épaule** pour tout le monde.
-
-## 0–5 · Échauffement dans les carrés
+## 0–5 · 19h15–19h20 · Échauffement dans les carrés
 
 Mini-tennis **dans les carrés de service**, par paires qui se font face de part et d'autre du filet.
 
@@ -23,7 +14,7 @@ Mini-tennis **dans les carrés de service**, par paires qui se font face de part
 - **Alterner coup droit et revers**, sinon le revers arrive froid au premier point compté.
 - Une minute de volées avant de passer en ligne.
 
-## 5–15 · Échauffement en ligne
+## 5–15 · 19h20–19h30 · Échauffement en ligne
 
 On recule au fond du court et on continue **droit**, chaque paire dans sa moitié de terrain.
 
@@ -31,7 +22,7 @@ On recule au fond du court et on continue **droit**, chaque paire dans sa moiti�
 
 Objectif, annoncé au bout de quelques minutes : **prendre la balle tôt, au sommet du rebond.**
 
-## 15–25 · Diagonales
+## 15–25 · 19h30–19h40 · Diagonales
 
 Quatre joueurs au fond, deux de chaque côté, **deux balles en jeu en même temps**, chacun reste sur sa diagonale, mais en se recentrant entre chaque frappe.
 
@@ -42,7 +33,7 @@ Les deux qui attendent **entrent à chaque balle**.
 
 Ce que je regarde : **qui s'arrête de bouger entre deux frappes.** C'est le premier signe de la qualité physique, bien avant la vitesse de balle.
 
-## 25–50 · 1 contre 1 sur tout le terrain
+## 25–50 · 19h40–20h05 · 1 contre 1 sur tout le terrain
 
 Des pastilles d'un côté du filet, au milieu de la zone de fond, pour obliger à jouer long.
 
@@ -50,7 +41,7 @@ Je lance la balle de ce côté. **Le joueur remet d'abord en partenaire**, puis 
 
 **On change de rôle au bout de 12 minutes, et de partenaire aussi.**
 
-## 50–60 · Service
+## 50–60 · 20h05–20h15 · Service
 
 **Les six servent en même temps, tous du même côté, depuis la ligne de fond**.
 
@@ -58,7 +49,7 @@ Une seule chose à regarder : **le lancer.** Un lancer qui part derrière la tê
 
 Ramassage collectif avant d'enchaîner.
 
-## 60–90 · Points avec service
+## 60–90 · 20h15–20h45 · Points avec service
 
 1 contre 1 sur tout le terrain, point avec service.
 
@@ -71,11 +62,11 @@ Ramassage collectif avant d'enchaîner.
 
 À remplir pendant ou juste après la séance. Une croix, un mot, ou un chiffre suffit.
 
-| Joueur | Classement | Portable | Attitude | Physique | Combativité | Service | À travailler |
-|---|---|---|---|---|---|---|---|
-| Raphaël BERNARD | 30/5 | 06 73 92 34 33 | | | | | |
-| Sébastien CHANTEUR | NC | 06 68 17 32 33 | | | | | |
-| Ludovic CLEMENT | 30/4 | 06 84 46 14 77 | | | | | |
-| Marc EMIEUX | 40 | 06 61 66 87 68 | | | | | |
-| Maxime MANCIER | 40 | 06 82 12 12 54 | | | | | |
-| Valentin LEROY | 40 | 07 51 63 68 90 | | | | | |
+| Joueur | Classement | Portable | Veut travailler |
+|---|---|---|---|
+| Raphaël BERNARD | 30/5 | 06 73 92 34 33 | |
+| Sébastien CHANTEUR | NC | 06 68 17 32 33 | |
+| Ludovic CLEMENT | 30/4 | 06 84 46 14 77 | |
+| Marc EMIEUX | 40 | 06 61 66 87 68 | |
+| Maxime MANCIER | 40 | 06 82 12 12 54 | |
+| Valentin LEROY | 40 | 07 51 63 68 90 | |
