@@ -1,6 +1,6 @@
 # Séance de secours — Défendre sur une balle longue
 
-Jeudi 19h15–20h45, groupe adultes messieurs, 6 inscrits (NC à 30/4), un court. Je suis le prof : je ne joue pas, je peux lancer au panier et rester à l'extérieur de l'exercice.
+Jeudi 19h15–20h45, groupe adultes messieurs, 6 inscrits (NC à 30/4), un court.
 
 À annoncer en début de séance : **quand je suis en difficulté, je joue haut et long pour me redonner du temps.**
 
@@ -11,19 +11,19 @@ Jeudi 19h15–20h45, groupe adultes messieurs, 6 inscrits (NC à 30/4), un court
 
 La zone longue : **les deux derniers mètres avant la ligne de fond**, matérialisés par des plots de chaque côté.
 
-## 0–5 mn · 19h15–19h20 · Échauffement dans les carrés
+## 19h15–19h20 · 0–5 mn · Échauffement dans les carrés
 
 Comme la semaine dernière : mini-tennis dans les carrés de service, deux par deux, chaque paire dans son couloir, on joue **droit**. À 5, le cinquième **entre à chaque balle**.
 
 Mêmes consignes : le geste en entier mais doucement, du lift, les pieds bougent entre chaque frappe, alterner coup droit et revers, une minute de volées pour finir.
 
-## 5–15 mn · 19h20–19h30 · Échauffement en ligne
+## 19h20–19h30 · 5–15 mn · Échauffement en ligne
 
 On recule au fond, toujours **droit**, deux couloirs, rotation à chaque balle à 5 ou 6. On peut changer de partenaire en cours d'exercice.
 
 **Les trois dernières minutes : un joueur de chaque paire ne joue que des balles hautes**, deux mètres au-dessus du filet, puis on inverse. On prend la mesure de la hauteur avant d'en avoir besoin.
 
-## 15–35 mn · 19h30–19h50 · Au panier : défendre sur une balle d'attaque
+## 19h30–19h50 · 15–35 mn · Au panier : défendre sur une balle d'attaque
 
 Je lance du panier, côté opposé. Les six en file derrière la ligne de fond.
 
@@ -34,7 +34,7 @@ Je lance du panier, côté opposé. Les six en file derrière la ligne de fond.
 
 Ce que je regarde : **les appuis au moment de la frappe.** Débordé, il ouvre et pousse sur la jambe extérieure ; s'il a le temps, il se met en ligne. Celui qui frappe en courant, sans appui, ne met jamais la balle long.
 
-## 35–50 mn · 19h50–20h05 · Deux diagonales : l'un attaque, l'autre défend
+## 19h50–20h05 · 35–50 mn · Deux diagonales : l'un attaque, l'autre défend
 
 Quatre joueurs au fond, deux balles en jeu, chacun sur sa diagonale, comme la semaine dernière.
 
@@ -45,7 +45,7 @@ Quatre joueurs au fond, deux balles en jeu, chacun sur sa diagonale, comme la se
 
 Objectif annoncé : **3 défenses d'affilée dans la zone longue.**
 
-## 50–60 mn · 20h05–20h15 · Service : stabilité et lancer
+## 20h05–20h15 · 50–60 mn · Service : stabilité et lancer
 
 **Les six servent en même temps, tous du même côté, depuis la ligne de fond**, trois à droite du centre, trois à gauche. Je circule derrière eux.
 
@@ -54,7 +54,7 @@ Objectif annoncé : **3 défenses d'affilée dans la zone longue.**
 
 Ramassage collectif avant d'enchaîner.
 
-## 60–85 mn · 20h15–20h40 · Phase de jeu : engagement à la cuillère
+## 20h15–20h40 · 60–85 mn · Phase de jeu : engagement à la cuillère
 
 Simple, **terrain complet**.
 
@@ -67,7 +67,7 @@ Simple, **terrain complet**.
 
 Ce que je regarde : quand l'engageur est à son tour débordé, **est-ce qu'il rejoue haut et long, ou est-ce qu'il force.**
 
-## 85–90 mn · 20h40–20h45 · Retour de séance
+## 20h40–20h45 · 85–90 mn · Retour de séance
 
 Cinq minutes, tout le monde assis au banc.
 
