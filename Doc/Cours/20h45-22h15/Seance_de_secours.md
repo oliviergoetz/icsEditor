@@ -11,19 +11,19 @@ Jeudi 20h45–22h15, entraînement équipe, 6 inscrits (30 à 15/5), un court. J
 
 La zone longue : **les deux derniers mètres avant la ligne de fond**, matérialisés par des plots de chaque côté.
 
-## 0–5 · 20h45–20h50 · Échauffement dans les carrés
+## 0–5 mn · 20h45–20h50 · Échauffement dans les carrés
 
 Comme la semaine dernière : mini-tennis dans les carrés de service, deux par deux, chaque paire dans son couloir, on joue **droit**. À 5, le cinquième **entre à chaque balle**.
 
 Mêmes consignes : le geste en entier mais doucement, du lift, les pieds bougent entre chaque frappe, alterner coup droit et revers, une minute de volées pour finir.
 
-## 5–15 · 20h50–21h00 · Échauffement en ligne
+## 5–15 mn · 20h50–21h00 · Échauffement en ligne
 
 On recule au fond, toujours **droit**, deux couloirs, rotation à chaque balle à 5 ou 6. On peut changer de partenaire en cours d'exercice.
 
 **Les trois dernières minutes : un joueur de chaque paire ne joue que des balles hautes**, deux mètres au-dessus du filet, puis on inverse. On prend la mesure de la hauteur avant d'en avoir besoin.
 
-## 15–35 · 21h00–21h20 · Au panier : défendre sur une balle d'attaque
+## 15–35 mn · 21h00–21h20 · Au panier : défendre sur une balle d'attaque
 
 Je lance du panier, côté opposé. Les six en file derrière la ligne de fond.
 
@@ -34,7 +34,7 @@ Je lance du panier, côté opposé. Les six en file derrière la ligne de fond.
 
 Ce que je regarde : **les appuis au moment de la frappe.** Débordé, il ouvre et pousse sur la jambe extérieure ; s'il a le temps, il se met en ligne. Celui qui frappe en courant, sans appui, ne met jamais la balle long.
 
-## 35–50 · 21h20–21h35 · Deux diagonales : l'un attaque, l'autre défend
+## 35–50 mn · 21h20–21h35 · Deux diagonales : l'un attaque, l'autre défend
 
 Quatre joueurs au fond, deux balles en jeu, chacun sur sa diagonale, comme la semaine dernière.
 
@@ -45,7 +45,7 @@ Quatre joueurs au fond, deux balles en jeu, chacun sur sa diagonale, comme la se
 
 Objectif annoncé : **3 défenses d'affilée dans la zone longue.**
 
-## 50–60 · 21h35–21h45 · Service : stabilité et lancer
+## 50–60 mn · 21h35–21h45 · Service : stabilité et lancer
 
 **Les six servent en même temps, tous du même côté, depuis la ligne de fond**, trois à droite du centre, trois à gauche. Je circule derrière eux.
 
@@ -54,7 +54,7 @@ Objectif annoncé : **3 défenses d'affilée dans la zone longue.**
 
 Ramassage collectif avant d'enchaîner.
 
-## 60–85 · 21h45–22h10 · Phase de jeu : engagement à la cuillère
+## 60–85 mn · 21h45–22h10 · Phase de jeu : engagement à la cuillère
 
 Simple, **terrain complet**.
 
@@ -67,7 +67,7 @@ Simple, **terrain complet**.
 
 Ce que je regarde : quand l'engageur est à son tour débordé, **est-ce qu'il rejoue haut et long, ou est-ce qu'il force.**
 
-## 85–90 · 22h10–22h15 · Retour de séance
+## 85–90 mn · 22h10–22h15 · Retour de séance
 
 Cinq minutes, tout le monde assis au banc.
 
@@ -76,8 +76,6 @@ Cinq minutes, tout le monde assis au banc.
 - Rappel du service : le lancer dans l'axe du pied avant, à refaire seul en échauffement.
 
 ## Grille d'observation
-
-À remplir pendant ou juste après la séance. Une croix, un mot, ou un chiffre suffit.
 
 | Joueur | Classement | Portable | Défense haute et longue | Appuis | Service : appuis | Service : lancer | Veut travailler |
 |---|---|---|---|---|---|---|---|
