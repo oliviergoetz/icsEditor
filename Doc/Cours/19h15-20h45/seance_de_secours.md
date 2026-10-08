@@ -1,4 +1,4 @@
-# Séance 2 — Défendre sur une balle longue
+# Séance de secours — Défendre sur une balle longue
 
 Jeudi 19h15–20h45, groupe adultes messieurs, 6 inscrits (NC à 30/4), un court. Je suis le prof : je ne joue pas, je peux lancer au panier et rester à l'extérieur de l'exercice.
 
@@ -29,7 +29,7 @@ Je lance du panier, côté opposé. Les six en file derrière la ligne de fond.
 
 - Je lance **une balle longue et décalée**, qui oblige à courir.
 - Le joueur répond **haut et long, en croisé**, dans la zone longue.
-- **4 balles chacun**, puis il ressort. Ceux qui attendent ramassent et réalimentent le panier.
+- **2 balles chacun**, puis il ressort. Ceux qui attendent ramassent et réalimentent le panier.
 - Au bout de 10 minutes, on passe côté revers.
 
 Ce que je regarde : **les appuis au moment de la frappe.** Débordé, il ouvre et pousse sur la jambe extérieure ; s'il a le temps, il se met en ligne. Celui qui frappe en courant, sans appui, ne met jamais la balle long.
@@ -38,12 +38,12 @@ Ce que je regarde : **les appuis au moment de la frappe.** Débordé, il ouvre e
 
 Quatre joueurs au fond, deux balles en jeu, chacun sur sa diagonale, comme la semaine dernière.
 
-- Sur chaque diagonale, **un attaquant et un défenseur** : l'attaquant accélère, le défenseur ne joue que haut et long.
+- Sur chaque diagonale, **un attaquant et un défenseur** : l'attaquant joue **long et appuyé, sans chercher le point**, le défenseur ne joue que haut et long.
 - **On inverse les rôles toutes les 6 balles.**
 - Les deux qui attendent **entrent à chaque balle** : celui qui manque sort.
 - Changement de diagonale au milieu du bloc.
 
-Objectif annoncé : **5 défenses d'affilée dans la zone longue.**
+Objectif annoncé : **3 défenses d'affilée dans la zone longue.**
 
 ## 50–60 · 20h05–20h15 · Service : stabilité et lancer
 
