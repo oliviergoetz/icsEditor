@@ -2,10 +2,10 @@
 
 | Joueur | 01/10 | 08/10 | Présence |
 |---|---|---|---|
-| Arnaud CARON | ✓ | | 1/1 |
-| Xavier COMBES | ❌ | | 0/1 |
-| Sébastien LACOTE | ✓ | | 1/1 |
-| Bastien MAURIN | ✓ | | 1/1 |
-| Joëlle SCHITTER | ❌ | | 0/1 |
-| Davide VICENTE | ✓ | | 1/1 |
-| **Présents** | **4** | | |
+| Arnaud CARON | ✓ | ✓ | 2/2 |
+| Xavier COMBES | ❌ | ✓ | 1/2 |
+| Sébastien LACOTE | ✓ | ✓ | 2/2 |
+| Bastien MAURIN | ✓ | ✓ | 2/2 |
+| Joëlle SCHITTER | ❌ | ❌ | 0/2 |
+| Davide VICENTE | ✓ | ✓ | 2/2 |
+| **Présents** | **4** | **5** | |
