@@ -11,13 +11,17 @@ namespace icsEditor
 {
     public static class ICSManager
     {
-        public static string GenerateICS(List<CalendarEvent> events)
+        public static string GenerateICS(List<CalendarEvent> events, string lienAgenda = null)
         {
             var calendar = new Calendar();
             calendar.ProductId = "-//icsEditor//FR";
             calendar.Version = "2.0";
             calendar.Scale = "GREGORIAN";
             calendar.Method = "PUBLISH";
+
+            // Où consulter l'agenda publié : conservé dans le fichier pour s'en souvenir
+            if (!string.IsNullOrWhiteSpace(lienAgenda))
+                calendar.AddProperty("URL", lienAgenda.Trim());
 
             foreach (var evt in events)
             {
@@ -96,6 +100,20 @@ namespace icsEditor
 
             var serializer = new CalendarSerializer();
             return serializer.SerializeToString(calendar);
+        }
+
+        public static string LireLienAgenda(string icsContent)
+        {
+            var calendar = Calendar.Load(icsContent);
+            if (calendar == null || !calendar.Properties.ContainsKey("URL"))
+                return string.Empty;
+
+            // Ical.Net relit URL comme un Uri, dont ToString() décode les %xx :
+            // on rend le texte tel qu'il est écrit dans le fichier.
+            object valeur = calendar.Properties["URL"].Value;
+            if (valeur is Uri uri)
+                return uri.OriginalString;
+            return valeur?.ToString() ?? string.Empty;
         }
 
         public static List<CalendarEvent> ParseICS(string icsContent)

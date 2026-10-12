@@ -26,6 +26,7 @@ namespace icsEditor
             this.dtpDateFin = new System.Windows.Forms.DateTimePicker();
             this.lblHeureDebut = new MetroFramework.Controls.MetroLabel();
             this.dtpHeureDebut = new System.Windows.Forms.DateTimePicker();
+            this.chkJourneeEntiere = new MetroFramework.Controls.MetroCheckBox();
             this.lblHeureFin = new MetroFramework.Controls.MetroLabel();
             this.dtpHeureFin = new System.Windows.Forms.DateTimePicker();
             this.lblLieu = new MetroFramework.Controls.MetroLabel();
@@ -47,8 +48,9 @@ namespace icsEditor
             this.btnOuvrir = new MetroFramework.Controls.MetroButton();
             this.btnPurgeAnnulations = new MetroFramework.Controls.MetroButton();
             this.toolTipAide = new System.Windows.Forms.ToolTip(this.components);
-            this.chkJourneeEntiere = new MetroFramework.Controls.MetroCheckBox();
             this.lblVersion = new MetroFramework.Controls.MetroLabel();
+            this.lblLienAgenda = new MetroFramework.Controls.MetroLabel();
+            this.txtLienAgenda = new MetroFramework.Controls.MetroTextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.eventGroupBox.SuspendLayout();
@@ -58,7 +60,7 @@ namespace icsEditor
             // eventGroupBox
             // 
             this.eventGroupBox.Controls.Add(this.eventPanel);
-            this.eventGroupBox.Location = new System.Drawing.Point(23, 80);
+            this.eventGroupBox.Location = new System.Drawing.Point(23, 115);
             this.eventGroupBox.Name = "eventGroupBox";
             this.eventGroupBox.Size = new System.Drawing.Size(465, 460);
             this.eventGroupBox.TabIndex = 0;
@@ -190,7 +192,7 @@ namespace icsEditor
             this.chkJourneeEntiere.AutoSize = true;
             this.chkJourneeEntiere.Location = new System.Drawing.Point(310, 80);
             this.chkJourneeEntiere.Name = "chkJourneeEntiere";
-            this.chkJourneeEntiere.Size = new System.Drawing.Size(130, 15);
+            this.chkJourneeEntiere.Size = new System.Drawing.Size(114, 17);
             this.chkJourneeEntiere.TabIndex = 3;
             this.chkJourneeEntiere.Text = "Journée entière";
             this.chkJourneeEntiere.UseSelectable = true;
@@ -296,7 +298,7 @@ namespace icsEditor
             // btnAdd
             // 
             this.btnAdd.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnAdd.Location = new System.Drawing.Point(283, 550);
+            this.btnAdd.Location = new System.Drawing.Point(283, 585);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(99, 30);
             this.btnAdd.TabIndex = 8;
@@ -307,7 +309,7 @@ namespace icsEditor
             // btnUpdate
             // 
             this.btnUpdate.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnUpdate.Location = new System.Drawing.Point(388, 550);
+            this.btnUpdate.Location = new System.Drawing.Point(388, 585);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(99, 30);
             this.btnUpdate.TabIndex = 9;
@@ -318,7 +320,7 @@ namespace icsEditor
             // btnClear
             // 
             this.btnClear.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnClear.Location = new System.Drawing.Point(178, 550);
+            this.btnClear.Location = new System.Drawing.Point(178, 585);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(99, 30);
             this.btnClear.TabIndex = 7;
@@ -332,7 +334,7 @@ namespace icsEditor
             | System.Windows.Forms.AnchorStyles.Left)));
             this.eventsListBox.FormattingEnabled = true;
             this.eventsListBox.ItemHeight = 16;
-            this.eventsListBox.Location = new System.Drawing.Point(506, 88);
+            this.eventsListBox.Location = new System.Drawing.Point(506, 123);
             this.eventsListBox.Name = "eventsListBox";
             this.eventsListBox.Size = new System.Drawing.Size(714, 452);
             this.eventsListBox.TabIndex = 10;
@@ -341,7 +343,7 @@ namespace icsEditor
             // btnDupliquer
             // 
             this.btnDupliquer.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnDupliquer.Location = new System.Drawing.Point(506, 550);
+            this.btnDupliquer.Location = new System.Drawing.Point(506, 585);
             this.btnDupliquer.Name = "btnDupliquer";
             this.btnDupliquer.Size = new System.Drawing.Size(100, 30);
             this.btnDupliquer.TabIndex = 11;
@@ -349,10 +351,21 @@ namespace icsEditor
             this.btnDupliquer.UseSelectable = true;
             this.btnDupliquer.Click += new System.EventHandler(this.btnDupliquer_Click);
             // 
+            // btnClasserParDates
+            // 
+            this.btnClasserParDates.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnClasserParDates.Location = new System.Drawing.Point(844, 585);
+            this.btnClasserParDates.Name = "btnClasserParDates";
+            this.btnClasserParDates.Size = new System.Drawing.Size(150, 30);
+            this.btnClasserParDates.TabIndex = 14;
+            this.btnClasserParDates.Text = "Classer par dates";
+            this.btnClasserParDates.UseSelectable = true;
+            this.btnClasserParDates.Click += new System.EventHandler(this.btnClasserParDates_Click);
+            // 
             // btnDelete
             // 
             this.btnDelete.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnDelete.Location = new System.Drawing.Point(612, 550);
+            this.btnDelete.Location = new System.Drawing.Point(612, 585);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(100, 30);
             this.btnDelete.TabIndex = 12;
@@ -363,7 +376,7 @@ namespace icsEditor
             // btnDeleteAll
             // 
             this.btnDeleteAll.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnDeleteAll.Location = new System.Drawing.Point(718, 550);
+            this.btnDeleteAll.Location = new System.Drawing.Point(718, 585);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(120, 30);
             this.btnDeleteAll.TabIndex = 13;
@@ -371,21 +384,10 @@ namespace icsEditor
             this.btnDeleteAll.UseSelectable = true;
             this.btnDeleteAll.Click += new System.EventHandler(this.btnDeleteAll_Click);
             // 
-            // btnClasserParDates
-            // 
-            this.btnClasserParDates.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnClasserParDates.Location = new System.Drawing.Point(844, 550);
-            this.btnClasserParDates.Name = "btnClasserParDates";
-            this.btnClasserParDates.Size = new System.Drawing.Size(150, 30);
-            this.btnClasserParDates.TabIndex = 14;
-            this.btnClasserParDates.Text = "Classer par dates";
-            this.btnClasserParDates.UseSelectable = true;
-            this.btnClasserParDates.Click += new System.EventHandler(this.btnClasserParDates_Click);
-            // 
             // btnMoveUp
             // 
             this.btnMoveUp.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnMoveUp.Location = new System.Drawing.Point(1000, 550);
+            this.btnMoveUp.Location = new System.Drawing.Point(1000, 585);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(60, 30);
             this.btnMoveUp.TabIndex = 15;
@@ -396,7 +398,7 @@ namespace icsEditor
             // btnMoveDown
             // 
             this.btnMoveDown.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnMoveDown.Location = new System.Drawing.Point(1066, 550);
+            this.btnMoveDown.Location = new System.Drawing.Point(1066, 585);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(60, 30);
             this.btnMoveDown.TabIndex = 16;
@@ -458,6 +460,45 @@ namespace icsEditor
             this.lblVersion.TabIndex = 21;
             this.lblVersion.Text = "icsEditor v1.0.0";
             // 
+            // lblLienAgenda
+            // 
+            this.lblLienAgenda.AutoSize = true;
+            this.lblLienAgenda.Location = new System.Drawing.Point(29, 78);
+            this.lblLienAgenda.Name = "lblLienAgenda";
+            this.lblLienAgenda.Size = new System.Drawing.Size(111, 20);
+            this.lblLienAgenda.TabIndex = 22;
+            this.lblLienAgenda.Text = "Lien de l\'agenda";
+            // 
+            // txtLienAgenda
+            // 
+            // 
+            // 
+            // 
+            this.txtLienAgenda.CustomButton.Image = null;
+            this.txtLienAgenda.CustomButton.Location = new System.Drawing.Point(1018, 1);
+            this.txtLienAgenda.CustomButton.Name = "";
+            this.txtLienAgenda.CustomButton.Size = new System.Drawing.Size(23, 23);
+            this.txtLienAgenda.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtLienAgenda.CustomButton.TabIndex = 1;
+            this.txtLienAgenda.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtLienAgenda.CustomButton.UseSelectable = true;
+            this.txtLienAgenda.CustomButton.Visible = false;
+            this.txtLienAgenda.Lines = new string[0];
+            this.txtLienAgenda.Location = new System.Drawing.Point(178, 78);
+            this.txtLienAgenda.MaxLength = 32767;
+            this.txtLienAgenda.Name = "txtLienAgenda";
+            this.txtLienAgenda.PasswordChar = '\0';
+            this.txtLienAgenda.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtLienAgenda.SelectedText = "";
+            this.txtLienAgenda.SelectionLength = 0;
+            this.txtLienAgenda.SelectionStart = 0;
+            this.txtLienAgenda.ShortcutsEnabled = true;
+            this.txtLienAgenda.Size = new System.Drawing.Size(1042, 25);
+            this.txtLienAgenda.TabIndex = 0;
+            this.txtLienAgenda.UseSelectable = true;
+            this.txtLienAgenda.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtLienAgenda.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
             // saveFileDialog
             // 
             this.saveFileDialog.Filter = "Fichiers ICS (*.ics)|*.ics";
@@ -472,6 +513,8 @@ namespace icsEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1240, 680);
             this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.lblLienAgenda);
+            this.Controls.Add(this.txtLienAgenda);
             this.Controls.Add(this.btnNouveau);
             this.Controls.Add(this.btnOuvrir);
             this.Controls.Add(this.btnPurgeAnnulations);
@@ -490,14 +533,9 @@ namespace icsEditor
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1240, 680);
             this.MinimumSize = new System.Drawing.Size(1240, 680);
-            // Le mode par défaut (Flat, comme DropShadow) dessine l'ombre avec une
-            // seconde fenêtre qui devient propriétaire de celle-ci. Windows active
-            // alors une fenêtre incapable de recevoir le focus et les premières
-            // frappes se perdent. AeroShadow laisse Windows dessiner l'ombre et
-            // garde une fenêtre de premier niveau normale.
-            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Name = "MainForm";
             this.Resizable = false;
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.Text = "ICS Editor";
             this.eventGroupBox.ResumeLayout(false);
             this.eventPanel.ResumeLayout(false);
@@ -517,6 +555,8 @@ namespace icsEditor
         private MetroFramework.Controls.MetroButton btnMoveDown;
         private MetroFramework.Controls.MetroButton btnEnregistrer;
         private MetroFramework.Controls.MetroButton btnNouveau;
+        private MetroFramework.Controls.MetroLabel lblLienAgenda;
+        private MetroFramework.Controls.MetroTextBox txtLienAgenda;
         private MetroFramework.Controls.MetroButton btnOuvrir;
         private MetroFramework.Controls.MetroButton btnPurgeAnnulations;
         private System.Windows.Forms.ToolTip toolTipAide;

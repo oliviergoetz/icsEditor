@@ -81,6 +81,17 @@ namespace icsEditor
             dtpHeureFin.ValueChanged += (s, e) => MarkAsChanged();
             chkJourneeEntiere.CheckedChanged += (s, e) => { AppliquerJourneeEntiere(); MarkAsChanged(); };
             txtLieu.TextChanged += (s, e) => { RetirerSautsDeLigne(txtLieu); MarkAsChanged(); };
+            lblLienAgenda.Cursor = Cursors.Hand;
+            lblLienAgenda.UseStyleColors = true;
+            lblLienAgenda.Click += (s, e) => OuvrirLienAgenda();
+            toolTipAide.SetToolTip(lblLienAgenda, "Cliquer pour ouvrir l'agenda dans le navigateur.");
+
+            txtLienAgenda.TextChanged += (s, e) =>
+            {
+                RetirerSautsDeLigne(txtLienAgenda);
+                if (!chargementLienAgenda)
+                    MarkDocumentModified();
+            };
             txtDescription.TextChanged += (s, e) => MarkAsChanged();
 
             // Mettre à jour l'état des boutons
@@ -122,11 +133,13 @@ namespace icsEditor
 
         /// <summary>
         /// Un fichier sans événement ni annulation n'a rien à dire au calendrier
-        /// destinataire : on ne l'écrit pas. Des annulations seules suffisent.
+        /// destinataire : on ne l'écrit pas. Des annulations seules suffisent,
+        /// un lien d'agenda seul aussi.
         /// </summary>
         private bool HasContentToSave()
         {
-            return events.Count > 0 || cancelledEvents.Count > 0;
+            return events.Count > 0 || cancelledEvents.Count > 0
+                || !string.IsNullOrWhiteSpace(txtLienAgenda.Text);
         }
 
         private void UpdateTitle()
@@ -610,7 +623,7 @@ namespace icsEditor
                 List<CalendarEvent> aEnregistrer = new List<CalendarEvent>(events);
                 aEnregistrer.AddRange(cancelledEvents);
 
-                string icsContent = ICSManager.GenerateICS(aEnregistrer);
+                string icsContent = ICSManager.GenerateICS(aEnregistrer, txtLienAgenda.Text);
                 File.WriteAllText(currentFilePath, icsContent);
 
                 isDocumentModified = false;
@@ -625,6 +638,40 @@ namespace icsEditor
             }
         }
 
+        private bool chargementLienAgenda;
+
+        /// <summary>
+        /// Remplit le champ sans marquer le document modifié : seule une saisie
+        /// de l'utilisateur doit faire apparaître le « * ».
+        /// </summary>
+        private void AfficherLienAgenda(string lien)
+        {
+            chargementLienAgenda = true;
+            txtLienAgenda.Text = lien;
+            chargementLienAgenda = false;
+        }
+
+        private void OuvrirLienAgenda()
+        {
+            string lien = txtLienAgenda.Text.Trim();
+            if (!Uri.TryCreate(lien, UriKind.Absolute, out Uri uri)
+                || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+            {
+                MessageBox.Show("Saisissez d'abord une adresse commençant par http:// ou https://.", "Lien de l'agenda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                // Le texte saisi tel quel : Uri.ToString() décoderait les %xx
+                System.Diagnostics.Process.Start(lien);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Impossible d'ouvrir le navigateur : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnNouveau_Click(object sender, EventArgs e)
         {
             if (!ConfirmDocumentChanges())
@@ -635,6 +682,7 @@ namespace icsEditor
             events = new List<CalendarEvent>();
             cancelledEvents = new List<CalendarEvent>();
             currentFilePath = null;
+            AfficherLienAgenda(string.Empty);
             isDocumentModified = false;
 
             ClearInputs();
@@ -672,6 +720,7 @@ namespace icsEditor
                 cancelledEvents = parsedEvents.FindAll(parsed => parsed.EstAnnule);
 
                 currentFilePath = chemin;
+                AfficherLienAgenda(ICSManager.LireLienAgenda(icsContent));
                 isDocumentModified = false;
 
                 ClearInputs();
@@ -762,7 +811,13 @@ namespace icsEditor
                 if (i >= eventsListBox.Items.Count)
                     eventsListBox.Items.Add(texte);
                 else if (!texte.Equals(eventsListBox.Items[i]))
-                    eventsListBox.Items[i] = texte;
+                {
+                    // Items[i] = texte ne réécrit pas la ligne si seule la casse
+                    // change : WinForms compare l'ancien et le nouveau texte sans
+                    // tenir compte des majuscules. On remplace donc la ligne.
+                    eventsListBox.Items.RemoveAt(i);
+                    eventsListBox.Items.Insert(i, texte);
+                }
             }
 
             while (eventsListBox.Items.Count > events.Count)
@@ -786,6 +841,11 @@ namespace icsEditor
             int selectedIndex = eventsListBox.SelectedIndex;
 
             btnDeleteAll.Enabled = events.Count > 0;
+
+            // Une liste vide qui prend le focus fait lever une ArgumentException
+            // à WinForms quand un outil d'accessibilité demande l'élément actif.
+            // Sans gravité, mais le débogueur s'y arrête : on la grise tant qu'elle est vide.
+            eventsListBox.Enabled = events.Count > 0;
             btnDelete.Enabled = selectedIndex >= 0;
             btnDupliquer.Enabled = selectedIndex >= 0;
             btnClasserParDates.Enabled = events.Count > 1;
