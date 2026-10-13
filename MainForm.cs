@@ -1,6 +1,7 @@
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,6 +20,7 @@ namespace icsEditor
         /// </summary>
         private List<CalendarEvent> cancelledEvents = new List<CalendarEvent>();
         private int editingIndex = -1;
+        private MetroFramework.Controls.MetroLabel lblResultats;
         private bool hasUnsavedChanges = false;
 
         /// <summary>
@@ -39,6 +41,28 @@ namespace icsEditor
         public MainForm(string fichierAOuvrir = null)
         {
             InitializeComponent();
+
+            // La loupe est posée à gauche du champ et non dedans : avec DisplayIcon,
+            // MetroTextBox décale la saisie sans la rétrécir et masque le bas du cadre.
+            Controls.Add(new PictureBox
+            {
+                Image = CreerLoupe(),
+                SizeMode = PictureBoxSizeMode.CenterImage,
+                Location = new Point(txtRecherche.Left - 24, txtRecherche.Top),
+                Size = new Size(20, txtRecherche.Height)
+            });
+            // Compteur entre le champ et les flèches : sans lui, une recherche
+            // infructueuse ne se signalait que par un bip, facile à manquer.
+            lblResultats = new MetroFramework.Controls.MetroLabel
+            {
+                AutoSize = false,
+                FontSize = MetroFramework.MetroLabelSize.Small,
+                TextAlign = ContentAlignment.MiddleCenter,
+                UseCustomForeColor = true,
+                Location = new Point(txtRecherche.Right + 4, txtRecherche.Top),
+                Size = new Size(btnRecherchePrecedent.Left - txtRecherche.Right - 8, txtRecherche.Height)
+            };
+            Controls.Add(lblResultats);
 
             // Charger l'icône depuis les ressources embarquées
             try
@@ -93,6 +117,10 @@ namespace icsEditor
                     MarkDocumentModified();
             };
             txtDescription.TextChanged += (s, e) => MarkAsChanged();
+
+            txtRecherche.TextChanged += (s, e) => UpdateButtonStates();
+            toolTipAide.SetToolTip(btnRecherchePrecedent, "Résultat précédent (Maj+F3)");
+            toolTipAide.SetToolTip(btnRechercheSuivant, "Résultat suivant (F3)");
 
             // Mettre à jour l'état des boutons
             UpdateButtonStates();
@@ -563,6 +591,16 @@ namespace icsEditor
                 return true;
             }
 
+            // F3 cherche l'occurrence suivante depuis n'importe quel champ ;
+            // Entrée aussi, mais seulement dans la zone de recherche. Avec Maj,
+            // on remonte vers la précédente.
+            Keys touche = keyData & ~Keys.Shift;
+            if (touche == Keys.F3 || (touche == Keys.Enter && txtRecherche.ContainsFocus))
+            {
+                Rechercher((keyData & Keys.Shift) == Keys.Shift ? -1 : 1);
+                return true;
+            }
+
             // Collage dans un champ d'une ligne : la zone de texte Windows s'arrête
             // au premier saut de ligne, et un texte qui commence par un CRLF ne
             // colle donc rien. On colle nous-mêmes le texte débarrassé des sauts.
@@ -836,6 +874,87 @@ namespace icsEditor
             UpdateButtonStates();
         }
 
+        private void btnRecherchePrecedent_Click(object sender, EventArgs e) => Rechercher(-1);
+
+        private void btnRechercheSuivant_Click(object sender, EventArgs e) => Rechercher(1);
+
+        /// <summary>
+        /// Sélectionne l'événement suivant (sens = 1) ou précédent (sens = -1)
+        /// dont le libellé, le lieu ou la description contient le texte cherché,
+        /// en bouclant aux extrémités. La liste n'est pas filtrée : ses lignes
+        /// doivent rester alignées sur events. La sélection passe par
+        /// SelectedIndexChanged, qui demande quoi faire des modifications en cours.
+        /// </summary>
+        private void Rechercher(int sens)
+        {
+            string cherche = txtRecherche.Text.Trim();
+            if (cherche.Length == 0 || events.Count == 0)
+                return;
+
+            // Sans sélection, on part juste avant la première ligne (ou juste
+            // après la dernière en remontant).
+            int depart = eventsListBox.SelectedIndex >= 0 ? eventsListBox.SelectedIndex
+                       : sens > 0 ? -1 : events.Count;
+            for (int k = 1; k <= events.Count; k++)
+            {
+                int i = ((depart + sens * k) % events.Count + events.Count) % events.Count;
+                if (Correspond(events[i], cherche))
+                {
+                    eventsListBox.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// « 2 / 5 » quand l'événement sélectionné fait partie des résultats,
+        /// « 5 résultats » sinon, « aucun résultat » en rouge, rien sans recherche.
+        /// </summary>
+        private void MettreAJourCompteurRecherche()
+        {
+            string cherche = txtRecherche.Text.Trim();
+            if (cherche.Length == 0)
+            {
+                lblResultats.Text = "";
+                return;
+            }
+
+            List<int> trouves = Enumerable.Range(0, events.Count).Where(i => Correspond(events[i], cherche)).ToList();
+            int rang = trouves.IndexOf(eventsListBox.SelectedIndex);
+
+            lblResultats.ForeColor = trouves.Count == 0 ? Color.Firebrick : Color.FromArgb(109, 109, 109);
+            lblResultats.Text = trouves.Count == 0 ? "aucun résultat"
+                              : rang >= 0 ? $"{rang + 1} / {trouves.Count}"
+                              : $"{trouves.Count} {Libelles.Pluriel(trouves.Count, "résultat")}";
+        }
+
+        private static bool Correspond(CalendarEvent evt, string cherche)
+        {
+            return Contient(evt.Libelle, cherche) || Contient(evt.Lieu, cherche) || Contient(evt.Description, cherche);
+        }
+
+        /// <summary>
+        /// Loupe grise de 16 px pour la zone de recherche, dessinée ici plutôt
+        /// qu'ajoutée aux ressources.
+        /// </summary>
+        private static Image CreerLoupe()
+        {
+            var image = new Bitmap(16, 16);
+            using (Graphics g = Graphics.FromImage(image))
+            using (var crayon = new Pen(Color.FromArgb(109, 109, 109), 2f))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.DrawEllipse(crayon, 2, 2, 8, 8);
+                g.DrawLine(crayon, 9.5f, 9.5f, 14, 14);
+            }
+            return image;
+        }
+
+        private static bool Contient(string texte, string cherche)
+        {
+            return texte != null && texte.IndexOf(cherche, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
         private void UpdateButtonStates()
         {
             int selectedIndex = eventsListBox.SelectedIndex;
@@ -849,6 +968,10 @@ namespace icsEditor
             btnDelete.Enabled = selectedIndex >= 0;
             btnDupliquer.Enabled = selectedIndex >= 0;
             btnClasserParDates.Enabled = events.Count > 1;
+            bool rechercheActive = events.Count > 0 && txtRecherche.Text.Trim().Length > 0;
+            btnRecherchePrecedent.Enabled = rechercheActive;
+            btnRechercheSuivant.Enabled = rechercheActive;
+            MettreAJourCompteurRecherche();
             // Rien à enregistrer tant que la liste et le formulaire en cours
             // d'édition sont identiques au fichier sur disque.
             btnEnregistrer.Enabled = HasContentToSave() && (isDocumentModified || hasUnsavedChanges);

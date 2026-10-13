@@ -1,4 +1,4 @@
-namespace icsEditor
+﻿namespace icsEditor
 {
     partial class MainForm
     {
@@ -36,6 +36,9 @@ namespace icsEditor
             this.btnAdd = new MetroFramework.Controls.MetroButton();
             this.btnUpdate = new MetroFramework.Controls.MetroButton();
             this.btnClear = new MetroFramework.Controls.MetroButton();
+            this.txtRecherche = new MetroFramework.Controls.MetroTextBox();
+            this.btnRecherchePrecedent = new MetroFramework.Controls.MetroButton();
+            this.btnRechercheSuivant = new MetroFramework.Controls.MetroButton();
             this.eventsListBox = new System.Windows.Forms.ListBox();
             this.btnDupliquer = new MetroFramework.Controls.MetroButton();
             this.btnClasserParDates = new MetroFramework.Controls.MetroButton();
@@ -328,15 +331,68 @@ namespace icsEditor
             this.btnClear.UseSelectable = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // txtRecherche
+            // 
+            // 
+            // 
+            // 
+            this.txtRecherche.CustomButton.Image = null;
+            this.txtRecherche.CustomButton.Location = new System.Drawing.Point(468, 1);
+            this.txtRecherche.CustomButton.Name = "";
+            this.txtRecherche.CustomButton.Size = new System.Drawing.Size(23, 23);
+            this.txtRecherche.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtRecherche.CustomButton.TabIndex = 1;
+            this.txtRecherche.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtRecherche.CustomButton.UseSelectable = true;
+            this.txtRecherche.CustomButton.Visible = false;
+            this.txtRecherche.Lines = new string[0];
+            this.txtRecherche.Location = new System.Drawing.Point(530, 123);
+            this.txtRecherche.MaxLength = 32767;
+            this.txtRecherche.Name = "txtRecherche";
+            this.txtRecherche.PasswordChar = '\0';
+            this.txtRecherche.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtRecherche.SelectedText = "";
+            this.txtRecherche.SelectionLength = 0;
+            this.txtRecherche.SelectionStart = 0;
+            this.txtRecherche.ShortcutsEnabled = true;
+            this.txtRecherche.Size = new System.Drawing.Size(492, 25);
+            this.txtRecherche.TabIndex = 10;
+            this.txtRecherche.UseSelectable = true;
+            this.txtRecherche.WaterMark = "Rechercher (Entrée ou F3 : suivant)";
+            this.txtRecherche.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtRecherche.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // btnRecherchePrecedent
+            // 
+            this.btnRecherchePrecedent.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnRecherchePrecedent.Location = new System.Drawing.Point(1156, 123);
+            this.btnRecherchePrecedent.Name = "btnRecherchePrecedent";
+            this.btnRecherchePrecedent.Size = new System.Drawing.Size(30, 25);
+            this.btnRecherchePrecedent.TabIndex = 10;
+            this.btnRecherchePrecedent.Text = "◀";
+            this.btnRecherchePrecedent.UseSelectable = true;
+            this.btnRecherchePrecedent.Click += new System.EventHandler(this.btnRecherchePrecedent_Click);
+            // 
+            // btnRechercheSuivant
+            // 
+            this.btnRechercheSuivant.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnRechercheSuivant.Location = new System.Drawing.Point(1190, 123);
+            this.btnRechercheSuivant.Name = "btnRechercheSuivant";
+            this.btnRechercheSuivant.Size = new System.Drawing.Size(30, 25);
+            this.btnRechercheSuivant.TabIndex = 10;
+            this.btnRechercheSuivant.Text = "▶";
+            this.btnRechercheSuivant.UseSelectable = true;
+            this.btnRechercheSuivant.Click += new System.EventHandler(this.btnRechercheSuivant_Click);
+            // 
             // eventsListBox
             // 
             this.eventsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.eventsListBox.FormattingEnabled = true;
             this.eventsListBox.ItemHeight = 16;
-            this.eventsListBox.Location = new System.Drawing.Point(506, 123);
+            this.eventsListBox.Location = new System.Drawing.Point(506, 158);
             this.eventsListBox.Name = "eventsListBox";
-            this.eventsListBox.Size = new System.Drawing.Size(714, 452);
+            this.eventsListBox.Size = new System.Drawing.Size(714, 417);
             this.eventsListBox.TabIndex = 10;
             this.eventsListBox.SelectedIndexChanged += new System.EventHandler(this.eventsListBox_SelectedIndexChanged);
             // 
@@ -525,6 +581,9 @@ namespace icsEditor
             this.Controls.Add(this.btnDeleteAll);
             this.Controls.Add(this.btnDupliquer);
             this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.txtRecherche);
+            this.Controls.Add(this.btnRecherchePrecedent);
+            this.Controls.Add(this.btnRechercheSuivant);
             this.Controls.Add(this.eventsListBox);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnUpdate);
@@ -547,6 +606,9 @@ namespace icsEditor
 
         private System.Windows.Forms.GroupBox eventGroupBox;
         private System.Windows.Forms.ListBox eventsListBox;
+        private MetroFramework.Controls.MetroTextBox txtRecherche;
+        private MetroFramework.Controls.MetroButton btnRecherchePrecedent;
+        private MetroFramework.Controls.MetroButton btnRechercheSuivant;
         private MetroFramework.Controls.MetroButton btnDupliquer;
         private MetroFramework.Controls.MetroButton btnClasserParDates;
         private MetroFramework.Controls.MetroButton btnDelete;
