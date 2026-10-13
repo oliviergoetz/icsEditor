@@ -116,6 +116,17 @@ namespace icsEditor
                 if (!chargementLienAgenda)
                     MarkDocumentModified();
             };
+            lblEmail.Cursor = Cursors.Hand;
+            lblEmail.UseStyleColors = true;
+            lblEmail.Click += (s, e) => EcrireEmail();
+            toolTipAide.SetToolTip(lblEmail, "Cliquer pour écrire à cette adresse.");
+
+            txtEmail.TextChanged += (s, e) =>
+            {
+                RetirerSautsDeLigne(txtEmail);
+                if (!chargementLienAgenda)
+                    MarkDocumentModified();
+            };
             txtDescription.TextChanged += (s, e) => MarkAsChanged();
 
             txtRecherche.TextChanged += (s, e) => UpdateButtonStates();
@@ -162,12 +173,13 @@ namespace icsEditor
         /// <summary>
         /// Un fichier sans événement ni annulation n'a rien à dire au calendrier
         /// destinataire : on ne l'écrit pas. Des annulations seules suffisent,
-        /// un lien d'agenda seul aussi.
+        /// un lien d'agenda ou un email seul aussi.
         /// </summary>
         private bool HasContentToSave()
         {
             return events.Count > 0 || cancelledEvents.Count > 0
-                || !string.IsNullOrWhiteSpace(txtLienAgenda.Text);
+                || !string.IsNullOrWhiteSpace(txtLienAgenda.Text)
+                || !string.IsNullOrWhiteSpace(txtEmail.Text);
         }
 
         private void UpdateTitle()
@@ -661,7 +673,7 @@ namespace icsEditor
                 List<CalendarEvent> aEnregistrer = new List<CalendarEvent>(events);
                 aEnregistrer.AddRange(cancelledEvents);
 
-                string icsContent = ICSManager.GenerateICS(aEnregistrer, txtLienAgenda.Text);
+                string icsContent = ICSManager.GenerateICS(aEnregistrer, txtLienAgenda.Text, txtEmail.Text);
                 File.WriteAllText(currentFilePath, icsContent);
 
                 isDocumentModified = false;
@@ -679,14 +691,34 @@ namespace icsEditor
         private bool chargementLienAgenda;
 
         /// <summary>
-        /// Remplit le champ sans marquer le document modifié : seule une saisie
+        /// Remplit les champs sans marquer le document modifié : seule une saisie
         /// de l'utilisateur doit faire apparaître le « * ».
         /// </summary>
-        private void AfficherLienAgenda(string lien)
+        private void AfficherLienAgenda(string lien, string email)
         {
             chargementLienAgenda = true;
             txtLienAgenda.Text = lien;
+            txtEmail.Text = email;
             chargementLienAgenda = false;
+        }
+
+        private void EcrireEmail()
+        {
+            string email = txtEmail.Text.Trim();
+            if (email.Length == 0 || !email.Contains("@"))
+            {
+                MessageBox.Show("Saisissez d'abord une adresse email.", "Email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                System.Diagnostics.Process.Start("mailto:" + email);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Impossible d'ouvrir la messagerie : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OuvrirLienAgenda()
@@ -720,7 +752,7 @@ namespace icsEditor
             events = new List<CalendarEvent>();
             cancelledEvents = new List<CalendarEvent>();
             currentFilePath = null;
-            AfficherLienAgenda(string.Empty);
+            AfficherLienAgenda(string.Empty, string.Empty);
             isDocumentModified = false;
 
             ClearInputs();
@@ -758,7 +790,7 @@ namespace icsEditor
                 cancelledEvents = parsedEvents.FindAll(parsed => parsed.EstAnnule);
 
                 currentFilePath = chemin;
-                AfficherLienAgenda(ICSManager.LireLienAgenda(icsContent));
+                AfficherLienAgenda(ICSManager.LireLienAgenda(icsContent), ICSManager.LireEmail(icsContent));
                 isDocumentModified = false;
 
                 ClearInputs();
@@ -771,6 +803,10 @@ namespace icsEditor
                 {
                     eventsListBox.SelectedIndex = 0;
                 }
+
+                // Sans cela le focus tombe sur le premier champ (l'email),
+                // dont tout le texte apparaît sélectionné.
+                ActiveControl = eventsListBox;
             }
             catch (Exception ex)
             {

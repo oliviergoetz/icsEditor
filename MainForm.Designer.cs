@@ -54,6 +54,8 @@
             this.lblVersion = new MetroFramework.Controls.MetroLabel();
             this.lblLienAgenda = new MetroFramework.Controls.MetroLabel();
             this.txtLienAgenda = new MetroFramework.Controls.MetroTextBox();
+            this.lblEmail = new MetroFramework.Controls.MetroLabel();
+            this.txtEmail = new MetroFramework.Controls.MetroTextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.eventGroupBox.SuspendLayout();
@@ -519,7 +521,7 @@
             // lblLienAgenda
             // 
             this.lblLienAgenda.AutoSize = true;
-            this.lblLienAgenda.Location = new System.Drawing.Point(29, 78);
+            this.lblLienAgenda.Location = new System.Drawing.Point(460, 78);
             this.lblLienAgenda.Name = "lblLienAgenda";
             this.lblLienAgenda.Size = new System.Drawing.Size(111, 20);
             this.lblLienAgenda.TabIndex = 22;
@@ -531,7 +533,7 @@
             // 
             // 
             this.txtLienAgenda.CustomButton.Image = null;
-            this.txtLienAgenda.CustomButton.Location = new System.Drawing.Point(1018, 1);
+            this.txtLienAgenda.CustomButton.Location = new System.Drawing.Point(596, 1);
             this.txtLienAgenda.CustomButton.Name = "";
             this.txtLienAgenda.CustomButton.Size = new System.Drawing.Size(23, 23);
             this.txtLienAgenda.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -540,7 +542,7 @@
             this.txtLienAgenda.CustomButton.UseSelectable = true;
             this.txtLienAgenda.CustomButton.Visible = false;
             this.txtLienAgenda.Lines = new string[0];
-            this.txtLienAgenda.Location = new System.Drawing.Point(178, 78);
+            this.txtLienAgenda.Location = new System.Drawing.Point(600, 78);
             this.txtLienAgenda.MaxLength = 32767;
             this.txtLienAgenda.Name = "txtLienAgenda";
             this.txtLienAgenda.PasswordChar = '\0';
@@ -549,11 +551,50 @@
             this.txtLienAgenda.SelectionLength = 0;
             this.txtLienAgenda.SelectionStart = 0;
             this.txtLienAgenda.ShortcutsEnabled = true;
-            this.txtLienAgenda.Size = new System.Drawing.Size(1042, 25);
-            this.txtLienAgenda.TabIndex = 0;
+            this.txtLienAgenda.Size = new System.Drawing.Size(620, 25);
+            this.txtLienAgenda.TabIndex = 1;
             this.txtLienAgenda.UseSelectable = true;
             this.txtLienAgenda.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtLienAgenda.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Location = new System.Drawing.Point(29, 78);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(41, 20);
+            this.lblEmail.TabIndex = 23;
+            this.lblEmail.Text = "Email";
+            // 
+            // txtEmail
+            // 
+            // 
+            // 
+            // 
+            this.txtEmail.CustomButton.Image = null;
+            this.txtEmail.CustomButton.Location = new System.Drawing.Point(236, 1);
+            this.txtEmail.CustomButton.Name = "";
+            this.txtEmail.CustomButton.Size = new System.Drawing.Size(23, 23);
+            this.txtEmail.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtEmail.CustomButton.TabIndex = 1;
+            this.txtEmail.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtEmail.CustomButton.UseSelectable = true;
+            this.txtEmail.CustomButton.Visible = false;
+            this.txtEmail.Lines = new string[0];
+            this.txtEmail.Location = new System.Drawing.Point(178, 78);
+            this.txtEmail.MaxLength = 32767;
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.PasswordChar = ' ';
+            this.txtEmail.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtEmail.SelectedText = "";
+            this.txtEmail.SelectionLength = 0;
+            this.txtEmail.SelectionStart = 0;
+            this.txtEmail.ShortcutsEnabled = true;
+            this.txtEmail.Size = new System.Drawing.Size(260, 25);
+            this.txtEmail.TabIndex = 0;
+            this.txtEmail.UseSelectable = true;
+            this.txtEmail.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtEmail.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // saveFileDialog
             // 
@@ -571,6 +612,8 @@
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblLienAgenda);
             this.Controls.Add(this.txtLienAgenda);
+            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnNouveau);
             this.Controls.Add(this.btnOuvrir);
             this.Controls.Add(this.btnPurgeAnnulations);
@@ -619,6 +662,8 @@
         private MetroFramework.Controls.MetroButton btnNouveau;
         private MetroFramework.Controls.MetroLabel lblLienAgenda;
         private MetroFramework.Controls.MetroTextBox txtLienAgenda;
+        private MetroFramework.Controls.MetroLabel lblEmail;
+        private MetroFramework.Controls.MetroTextBox txtEmail;
         private MetroFramework.Controls.MetroButton btnOuvrir;
         private MetroFramework.Controls.MetroButton btnPurgeAnnulations;
         private System.Windows.Forms.ToolTip toolTipAide;

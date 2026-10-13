@@ -11,7 +11,10 @@ namespace icsEditor
 {
     public static class ICSManager
     {
-        public static string GenerateICS(List<CalendarEvent> events, string lienAgenda = null)
+        // Propriété privée : les clients calendrier ignorent les X- qu'ils ne connaissent pas
+        private const string ProprieteEmail = "X-ICSEDITOR-EMAIL";
+
+        public static string GenerateICS(List<CalendarEvent> events, string lienAgenda = null, string email = null)
         {
             var calendar = new Calendar();
             calendar.ProductId = "-//icsEditor//FR";
@@ -22,6 +25,10 @@ namespace icsEditor
             // Où consulter l'agenda publié : conservé dans le fichier pour s'en souvenir
             if (!string.IsNullOrWhiteSpace(lienAgenda))
                 calendar.AddProperty("URL", lienAgenda.Trim());
+
+            // Adresse de contact de l'agenda, conservée de la même façon
+            if (!string.IsNullOrWhiteSpace(email))
+                calendar.AddProperty(ProprieteEmail, email.Trim());
 
             foreach (var evt in events)
             {
@@ -114,6 +121,15 @@ namespace icsEditor
             if (valeur is Uri uri)
                 return uri.OriginalString;
             return valeur?.ToString() ?? string.Empty;
+        }
+
+        public static string LireEmail(string icsContent)
+        {
+            var calendar = Calendar.Load(icsContent);
+            if (calendar == null || !calendar.Properties.ContainsKey(ProprieteEmail))
+                return string.Empty;
+
+            return calendar.Properties[ProprieteEmail].Value?.ToString() ?? string.Empty;
         }
 
         public static List<CalendarEvent> ParseICS(string icsContent)
