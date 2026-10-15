@@ -2,10 +2,12 @@
 
 | Joueur | 01/10 | 08/10 | 15/10 | Présence |
 |---|---|---|---|---|
-| Arnaud CARON | ✓ | ✓ | ✓ | 3/3 |
+| Arnaud CARON | ✓ | ✓ | ❌ | 2/3 |
 | Xavier COMBES | ❌ | ✓ | ❌ | 1/3 |
 | Sébastien LACOTE | ✓ | ✓ | ❌ | 2/3 |
-| Bastien MAURIN | ✓ | ✓ | ✓ | 3/3 |
+| Bastien MAURIN | ✓ | ✓ | ✓¹ | 3/3 |
 | Joëlle SCHITTER | ❌ | ❌ | ❌ | 0/3 |
 | Davide VICENTE | ✓ | ✓ | ❌ | 2/3 |
-| **Présents** | **4** | **5** | **2** | |
+| **Présents** | **4** | **5** | **1** | |
+
+¹ Seul ce soir-là : a rejoint le groupe de Philippe.

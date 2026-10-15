@@ -8,4 +8,5 @@
 | Marc EMIEUX | ✓ | ❌ | ✓ | 2/3 |
 | Maxime MANCIER | ✓ | ✓ | ✓ | 3/3 |
 | Valentin LEROY | ✓ | ✓ | ✓ | 3/3 |
-| **Présents** | **6** | **5** | **5** | |
+| Nicolas ROIBET | — | — | ✓ | 1/1 |
+| **Présents** | **6** | **5** | **6** | |
