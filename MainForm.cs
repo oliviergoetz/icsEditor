@@ -96,12 +96,13 @@ namespace icsEditor
 
             // Ajouter des gestionnaires d'événements pour détecter les modifications
             txtLibelle.TextChanged += (s, e) => { RetirerSautsDeLigne(txtLibelle); MarkAsChanged(); };
-            // La fin suit le début (date et heure) : la plupart des événements
-            // tiennent sur une journée. Le chargement d'un événement réaffecte la
-            // fin juste après, sa vraie valeur est donc conservée.
+            // La date de fin suit la date de début : la plupart des événements
+            // tiennent sur une journée. L'heure de fin, elle, se décale avec
+            // l'heure de début pour conserver la durée. Le chargement d'un
+            // événement réaffecte la fin juste après, sa vraie valeur est donc conservée.
             dtpDateDebut.ValueChanged += (s, e) => { dtpDateFin.Value = dtpDateDebut.Value; MarkAsChanged(); };
             dtpDateFin.ValueChanged += (s, e) => MarkAsChanged();
-            dtpHeureDebut.ValueChanged += (s, e) => { dtpHeureFin.Value = dtpHeureDebut.Value; MarkAsChanged(); };
+            dtpHeureDebut.ValueChanged += (s, e) => { DecalerHeureFin(); MarkAsChanged(); };
             dtpHeureFin.ValueChanged += (s, e) => MarkAsChanged();
             chkJourneeEntiere.CheckedChanged += (s, e) => { AppliquerJourneeEntiere(); MarkAsChanged(); };
             txtLieu.TextChanged += (s, e) => { RetirerSautsDeLigne(txtLieu); MarkAsChanged(); };
@@ -130,6 +131,11 @@ namespace icsEditor
             txtDescription.TextChanged += (s, e) => MarkAsChanged();
 
             txtRecherche.TextChanged += (s, e) => UpdateButtonStates();
+
+            // Dessin des lignes à la main pour mettre en fond de couleur les événements du jour
+            eventsListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            eventsListBox.DrawItem += eventsListBox_DrawItem;
+
             toolTipAide.SetToolTip(btnRecherchePrecedent, "Résultat précédent (Maj+F3)");
             toolTipAide.SetToolTip(btnRechercheSuivant, "Résultat suivant (F3)");
 
@@ -801,7 +807,11 @@ namespace icsEditor
 
                 if (eventsListBox.Items.Count > 0)
                 {
-                    eventsListBox.SelectedIndex = 0;
+                    int index = IndexAOuvrir();
+                    eventsListBox.SelectedIndex = index;
+                    // En haut de la liste plutôt que tout en bas, où la
+                    // sélection seule l'amènerait
+                    eventsListBox.TopIndex = index;
                 }
 
                 // Sans cela le focus tombe sur le premier champ (l'email),
@@ -908,6 +918,77 @@ namespace icsEditor
 
             eventsListBox.EndUpdate();
             UpdateButtonStates();
+        }
+
+        private TimeSpan heureDebutPrecedente;
+
+        /// <summary>
+        /// Décale l'heure de fin d'autant que l'heure de début vient de bouger.
+        /// Un passage au-delà de minuit revient en début de journée : l'heure
+        /// seule est décalée, pas la date de fin.
+        /// </summary>
+        private void DecalerHeureFin()
+        {
+            TimeSpan debut = dtpHeureDebut.Value.TimeOfDay;
+            TimeSpan decalage = debut - heureDebutPrecedente;
+            heureDebutPrecedente = debut;
+
+            long jour = TimeSpan.FromDays(1).Ticks;
+            long fin = ((dtpHeureFin.Value.TimeOfDay + decalage).Ticks % jour + jour) % jour;
+            dtpHeureFin.Value = DateTime.Today.AddTicks(fin);
+        }
+
+        private static readonly Color FondAujourdhui = Color.FromArgb(214, 234, 255);
+
+        private static bool EstAujourdhui(CalendarEvent evt)
+        {
+            return evt.DateDebut.Date <= DateTime.Today && DateTime.Today <= evt.DateFin.Date;
+        }
+
+        /// <summary>
+        /// Événement à sélectionner à l'ouverture : le premier du jour, sinon le
+        /// prochain à venir (la liste n'est pas forcément triée), sinon le premier.
+        /// </summary>
+        private int IndexAOuvrir()
+        {
+            int index = events.FindIndex(EstAujourdhui);
+            if (index >= 0)
+                return index;
+
+            int prochain = -1;
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i].DateDebut.Date > DateTime.Today
+                    && (prochain < 0 || events[i].DateDebut < events[prochain].DateDebut))
+                    prochain = i;
+            }
+            return prochain >= 0 ? prochain : 0;
+        }
+
+        private void eventsListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0 || e.Index >= eventsListBox.Items.Count)
+            {
+                e.DrawBackground();
+                return;
+            }
+
+            bool selectionne = (e.State & DrawItemState.Selected) != 0;
+            if (!selectionne && eventsListBox.Enabled && e.Index < events.Count && EstAujourdhui(events[e.Index]))
+            {
+                using (var fond = new SolidBrush(FondAujourdhui))
+                    e.Graphics.FillRectangle(fond, e.Bounds);
+            }
+            else
+                e.DrawBackground();
+
+            Color couleur = !eventsListBox.Enabled ? SystemColors.GrayText
+                          : selectionne ? SystemColors.HighlightText
+                          : e.ForeColor;
+
+            TextRenderer.DrawText(e.Graphics, eventsListBox.Items[e.Index].ToString(), e.Font, e.Bounds, couleur,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine);
+            e.DrawFocusRectangle();
         }
 
         private void btnRecherchePrecedent_Click(object sender, EventArgs e) => Rechercher(-1);
