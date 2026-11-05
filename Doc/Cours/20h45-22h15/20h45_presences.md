@@ -5,7 +5,7 @@
 | Arnaud CARON | ✓ | ✓ | — |  | 2/2 |
 | Ludovic CLEMENT² | — | — | — |  | — |
 | Xavier COMBES | ❌ | ✓ | — |  | 1/2 |
-| Sébastien LACOTE | ✓ | ✓ | — |  | 2/2 |
+| Sébastien LACOTE | ✓ | ✓ | — | ❌ | 2/3 |
 | Bastien MAURIN | ✓ | ✓ | — |  | 2/2 |
 | Joëlle SCHITTER³ | ❌ | ❌ | — | — | 0/2 |
 | Davide VICENTE | ✓ | ✓ | — |  | 2/2 |
