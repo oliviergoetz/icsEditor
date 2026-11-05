@@ -7,7 +7,7 @@
 | Ludovic CLEMENT¹ | ✓ | ✓ | ❌ | — | 2/3 |
 | Marc EMIEUX | ✓ | ❌ | ✓ | ✓ | 3/4 |
 | Maxime MANCIER | ✓ | ✓ | ✓ | ✓ | 4/4 |
-| Valentin LEROY | ✓ | ✓ | ✓ |  | 3/3 |
+| Valentin LEROY | ✓ | ✓ | ✓ | ✓ | 4/4 |
 | Nicolas ROIBET | — | — | ✓ | ❌ | 1/2 |
 | Damien² | — | — | ✓ | — | 1/1 |
 | **Présents** | **6** | **5** | **7** |  | |
